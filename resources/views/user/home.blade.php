@@ -2,7 +2,7 @@
 
 @section('content')
 
-    <div class="bg-hero-bg pb-24">
+    <div class="bg-hero-bg pb-8">
         <div class="container mx-auto px-4 sm:px-6 lg:px-8">
             <section class="pb-8 pt-8">
                 <div class="flex flex-col md:flex-row items-center justify-between gap-12">
@@ -46,25 +46,29 @@
     </div>
     <div class="container mx-auto px-4 sm:px-6 lg:px-8">
 
-        <section class="mb-16 -mt-16">
+        <section class="mb-16 pt-8"> 
             <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
                 
-                <div class="bg-hero-bg p-8 rounded-xl shadow-lg flex items-center justify-between">
+                <div class="bg-hero-bg p-8 rounded-xl shadow-lg flex items-center justify-between transition duration-300 transform group hover:shadow-2xl hover:scale-[1.01]">
                     <div>
                         <span class="text-pink-600 font-bold mb-2 block">Big Sale</span>
                         <h2 class="text-3xl font-extrabold text-gray-900 mb-2">Get an Extra <br><span class="text-indigo-600">50% Off</span></h2>
-                        <p class="text-gray-500 max-w-xs">Lorem ipsum dolor sit amet, consectetur adipiscing elit. </p>
+                        <p class="text-gray-500 max-w-xs">Upgrade your self-care routine! Limited time offer on select supplements and personal care essentials.</p>
                     </div>
-                    <div class="w-2/5 h-40 bg-gray-800 rounded-lg"></div>
+                    <div class="w-2/5 h-40 rounded-lg relative overflow-hidden bg-gray-800">
+                        <img src="{{ asset('images/homepage/healthcarecompanylogo.jpg') }}" alt="Healthcare Company Logo" class="absolute inset-0 w-full h-full object-contain p-4 filter grayscale">
+                    </div>
                 </div>
     
-                <div class="bg-blue-700 p-8 rounded-xl shadow-lg flex items-center justify-between">
+                <div class="bg-blue-700 p-8 rounded-xl shadow-lg flex items-center justify-between transition duration-300 transform group hover:shadow-2xl hover:scale-[1.01]">
                     <div>
                         <span class="text-white font-semibold mb-2 block">Holiday Savings</span>
                         <h2 class="text-6xl font-extrabold text-white mb-4">Up to 40%</h2>
-                        <button class="bg-white text-blue-700 font-bold py-3 px-6 rounded-full hover:bg-gray-100 transition duration-200">Shop Now</button>
+                        <button class="bg-white text-blue-700 font-bold py-2 px-4 rounded-full hover:bg-gray-100 transition duration-200 text-sm mb-1">Shop Now</button>
                     </div>
-                    <div class="w-2/5 h-40 bg-gray-800 rounded-lg opacity-70"></div>
+                    <div class="w-2/5 h-40 rounded-lg relative overflow-hidden bg-gray-900 opacity-90">
+                        <img src="{{ asset('images/homepage/christmassale.jpg') }}" alt="Christmas Sale Banner" class="absolute inset-0 w-full h-full object-cover">
+                    </div>
                 </div>
             </div>
         </section>
