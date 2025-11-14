@@ -13,10 +13,10 @@ use App\Http\Controllers\UserController;
 */
 
 // Route utama Laravel (default)
-Route::get('/', function () {
-    return view('welcome');
-});
+// Route::get('/', function () {
+//     return view('welcome');
+// });
 
 // Route untuk Halaman Beranda Customer
 // Menggunakan UserController@index untuk melayani /home
-Route::get('/home', [UserController::class, 'index'])->name('home');
+Route::get('/', [UserController::class, 'index'])->name('home');
