@@ -17,9 +17,7 @@ class Payment extends Model
         'status'
     ];
 
-    /**
-     * Relasi Belongs To: Payment dimiliki oleh satu Order.
-     */
+    // 1 Payment has 1 Order
     public function Order()
     {
         return $this->belongsTo(Order::class);

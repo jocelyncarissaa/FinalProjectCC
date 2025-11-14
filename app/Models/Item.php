@@ -10,7 +10,6 @@ class Item extends Model
 {
     use HasFactory;
 
-    // Tambahkan semua kolom baru dari CSV ke fillable
     protected $fillable = [
         'name',
         'price',
@@ -22,17 +21,13 @@ class Item extends Model
         'image_path'
     ];
 
-    /**
-     * Relasi One-to-One: Item memiliki satu data Stok (Inventory).
-     */
+    // 1 Item has 1 Stok/Inventory
     public function Inventory()
     {
         return $this->hasOne(Inventory::class);
     }
 
-    /**
-     * Relasi One-to-Many: Item dapat berada di banyak OrderDetail.
-     */
+    // 1 Item has many OrderDetails
     public function OrderDetail()
     {
         return $this->hasMany(OrderDetail::class);

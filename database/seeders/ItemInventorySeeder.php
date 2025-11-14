@@ -22,30 +22,26 @@ class ItemInventorySeeder extends Seeder
         }
 
         $file = fopen($csvFile, 'r');
-        $header = fgetcsv($file); // Ambil header: Name,Category,Dosage Form,Strength,Manufacturer,Indication,Classification
-
-        // Tentukan indeks kolom dari header CSV
+        $header = fgetcsv($file); 
         $columnMap = array_flip($header); 
 
         DB::transaction(function () use ($file, $columnMap) {
             $count = 0;
             
             while (($row = fgetcsv($file)) !== FALSE) {
-                // Pastikan kolom 'Name' ada
                 if (!isset($columnMap['Name']) || empty($row[$columnMap['Name']])) continue;
                 
                 $itemName = $row[$columnMap['Name']];
                 
-                // *** Penyesuaian: Menambahkan data dummy untuk PRICE dan STOCK ***
-                // Generate harga acak
+                // Dummy buat harga sama stock 
+                // Generate harga random
                 $randomPrice = round(rand(100, 1000) * 100, 2); 
-                // Generate stok acak
+                // Generate stock random
                 $randomStock = rand(50, 300);
 
-                // 1. Buat data Item (Obat) - Menggunakan data dari CSV
-                $item = Item::create([
+                $item = Item::create([//from csv
                     'name' => $itemName,
-                    'price' => $randomPrice, // Dummy Price
+                    'price' => $randomPrice, 
                     'category' => $row[$columnMap['Category']] ?? null,
                     'dosage_form' => $row[$columnMap['Dosage Form']] ?? null,
                     'strength' => $row[$columnMap['Strength']] ?? null,
@@ -53,10 +49,9 @@ class ItemInventorySeeder extends Seeder
                     'indication' => $row[$columnMap['Indication']] ?? null,
                 ]);
 
-                // 2. Buat data Inventory (Stok)
                 Inventory::create([
                     'item_id' => $item->id,
-                    'stock' => $randomStock, // Dummy Stock
+                    'stock' => $randomStock, 
                 ]);
                 
                 $count++;

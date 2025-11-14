@@ -14,9 +14,8 @@ class Inventory extends Model
         'stock'
     ];
 
-    /**
-     * Relasi Belongs To: Inventory dimiliki oleh satu Item.
-     */
+    // 1 Inventory has 1 Item
+     
     public function Item()
     {
         return $this->belongsTo(Item::class);

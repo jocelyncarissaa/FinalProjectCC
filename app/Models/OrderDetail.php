@@ -18,17 +18,13 @@ class OrderDetail extends Model
         'price_per_unit'
     ];
 
-    /**
-     * Relasi Belongs To: OrderDetail dimiliki oleh satu Order.
-     */
+    // 1 OrderDetail has 1 Order
     public function Order()
     {
         return $this->belongsTo(Order::class);
     }
 
-    /**
-     * Relasi Belongs To: OrderDetail merujuk pada satu Item.
-     */
+    // 1 OrderDetail has 1 Item
     public function Item()
     {
         return $this->belongsTo(Item::class);

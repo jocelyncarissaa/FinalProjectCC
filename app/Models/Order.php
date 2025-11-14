@@ -16,26 +16,19 @@ class Order extends Model
         'status'
     ];
 
-    /**
-     * Relasi Belongs To: Order dimiliki oleh satu User (Customer).
-     */
+    // 1 Order has 1 User/Customer
     public function user()
     {
-        // Asumsi User Model adalah bawaan Laravel Auth
         return $this->belongsTo(User::class);
     }
 
-    /**
-     * Relasi One-to-Many: Satu Order memiliki banyak OrderDetails (daftar barang).
-     */
+    // 1 Order has many OrderDetails
     public function OrderDetails()
     {
         return $this->hasMany(OrderDetail::class);
     }
 
-    /**
-     * Relasi One-to-One: Order memiliki satu Payment.
-     */
+    // 1 Order has 1 Payment
     public function Payment()
     {
         return $this->hasOne(Payment::class);
