@@ -1,5 +1,6 @@
 <?php
 
+//Database/seeders/DatabaseSeeder.php
 namespace Database\Seeders;
 
 use App\Models\User;
@@ -15,7 +16,8 @@ class DatabaseSeeder extends Seeder
      */
     public function run(): void
     {
-        // User::factory(10)->create();
+        // Panggil seeder untuk data obat dan stok
+        $this->call(ItemInventorySeeder::class);
 
         User::factory()->create([
             'name' => 'Test User',
