@@ -39,12 +39,16 @@ class AuthController extends Controller
                 ->withInput();
         }
 
-        // Try login (success)
+        // Login sukses
         Auth::login($user, $request->filled('remember'));
         $request->session()->regenerate();
 
-        // return redirect()->route('home');
-        return redirect()->route('admin.dashboard');
+        //Redirect berdasarkan role nya
+        if ($user->role === 'admin') {
+            return redirect()->route('admin.dashboard');
+        }
+        // user biasa
+        return redirect()->route('home');
 
     }
 // REGISTERR
@@ -77,14 +81,14 @@ class AuthController extends Controller
         'name'     => $request->name,
         'email'    => $request->email,
         'password' => Hash::make($request->password),
+        'role'     => 'user',    //default role = user
         ]);
+
         // Auto login setelah register
         Auth::login($user);
 
-        // Redirect ke home
-        // return redirect()->route('home');
-        // ke dashboard
-        return redirect()->route('admin.dashboard');
+       // Redirect user baru → ke /home
+        return redirect()->route('home');
 
     }
 
