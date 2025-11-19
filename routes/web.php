@@ -3,6 +3,7 @@
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\UserController;
 use App\Http\Controllers\AuthController;
+use App\Http\Controllers\Admin\OrderController;
 
 /*
 |--------------------------------------------------------------------------
@@ -54,6 +55,15 @@ Route::middleware('auth')->group(function () {
     // TO DO: implement real export (Excel/PDF)
     return back()->with('status', 'Download ' . strtoupper($type) . ' is not implemented yet.');
     })->name('admin.report.download')->middleware('auth');
+
+    // List all orders
+    Route::get('/admin/orders', [OrderController::class, 'index'])->name('admin.orders.index');
+    
+    // View single order detail
+    Route::get('/admin/orders/{id}', [OrderController::class, 'show'])->name('admin.orders.show');
+    
+    // Optional: Update order status
+    Route::post('/admin/orders/{id}/update-status', [OrderController::class, 'updateStatus'])->name('admin.orders.update_status');
 
 });
 

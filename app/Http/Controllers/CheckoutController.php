@@ -26,7 +26,7 @@ class CheckoutController extends Controller
 
             // 1. Validasi Stok 
             foreach ($cart as $id => $details) {
-                $inventory = Inventory::find($id); 
+                $inventory = Inventory::where('item_id', $id)->first();
                 if (!$inventory || $inventory->stock < $details['quantity']) {
                     throw new \Exception('Stok untuk ' . $details['name'] . ' tidak mencukupi.');
                 }
@@ -49,7 +49,7 @@ class CheckoutController extends Controller
                     'price_per_unit' => $details['price']
                 ]);
 
-                $inventory = Inventory::find($id);
+                $inventory = Inventory::where('item_id', $id)->first();
                 $inventory->decrement('stock', $details['quantity']);
             }
 

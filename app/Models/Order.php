@@ -28,9 +28,22 @@ class Order extends Model
         return $this->hasMany(OrderDetail::class);
     }
 
-    // 1 Order has 1 Payment
-    public function Payment()
+    // // 1 Order has 1 Payment
+    // public function Payment()
+    // {
+    //     return $this->hasOne(Payment::class);
+    // }
+
+    // Add this accessor
+    public function getStatusBadgeClassAttribute()
     {
-        return $this->hasOne(Payment::class);
+        return match($this->status) {
+            'paid' => 'background: #D1FAE5; color: #065F46;', // Green
+            'pending' => 'background: #FEF3C7; color: #92400E;', // Yellow/Orange
+            'shipped' => 'background: #DBEAFE; color: #1E40AF;', // Blue
+            'cancelled' => 'background: #FEE2E2; color: #991B1B;', // Red
+            'completed' => 'background: #E0E7FF; color: #3730A3;', // Indigo
+            default => 'background: #F3F4F6; color: #374151;' // Gray
+        };
     }
 }

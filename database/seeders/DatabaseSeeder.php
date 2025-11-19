@@ -17,7 +17,11 @@ class DatabaseSeeder extends Seeder
     public function run(): void
     {
         // Panggil seeder untuk data obat dan stok
-        $this->call(ItemInventorySeeder::class);
+        $this->call([
+            UserSeeder::class,
+            ItemInventorySeeder::class,
+            OrderSeeder::class, // Pastikan ini dipanggil TERAKHIR karena butuh user & items
+        ]);
 
         User::factory()->create([
             'name' => 'Test User',
