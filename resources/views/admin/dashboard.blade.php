@@ -620,13 +620,10 @@
         <nav class="sidebar-menu">
             <div class="menu-section-title">Main</div>
             <div class="menu-item active">
-                <span class="menu-icon">🏠</span>
                 <span>Dashboard</span>
             </div>
             <a href="{{ route('admin.orders.index') }}" class="menu-item {{ request()->routeIs('admin.orders.*') ? 'active' : '' }}">
-                <span class="menu-icon">📦</span> <span>Orders</span>
-                
-                {{-- Fitur Bonus: Badge Jumlah Order Pending --}}
+                <span>Orders</span>
                 @php 
                     // Hitung order pending langsung di view (cara cepat)
                     $pendingCount = \App\Models\Order::where('status', 'pending')->count(); 
@@ -637,48 +634,39 @@
                 @endif
             </a>
             <a href="#" class="menu-item">
-                <span class="menu-icon">💊</span>
                 <span>Inventory</span>
             </a>
 
             <a href="#" class="menu-item">
-                <span class="menu-icon">📊</span>
                 <span>Reports</span>
             </a>
             
-            <a href="#" class="menu-item">
-                <span class="menu-icon">⚙️</span>
+            <!-- <a href="#" class="menu-item">
                 <span>Configuration</span>
             </a>
 
             <div class="menu-section-title">Communication</div>
             <a href="#" class="menu-item">
-                <span class="menu-icon">👥</span>
                 <span>Contact Management</span>
             </a>
             <a href="#" class="menu-item">
-                <span class="menu-icon">🔔</span>
                 <span>Notifications</span>
                 <span class="menu-badge">1</span>
             </a>
             <a href="#" class="menu-item">
-                <span class="menu-icon">💬</span>
                 <span>Chat with Visitors</span>
             </a>
 
             <div class="menu-section-title">System</div>
             <a href="#" class="menu-item">
-                <span class="menu-icon">🖥️</span>
                 <span>Application Settings</span>
             </a>
             <a href="#" class="menu-item">
-                <span class="menu-icon">🩺</span>
                 <span>Covid-19</span>
             </a>
             <a href="#" class="menu-item">
-                <span class="menu-icon">❓</span>
                 <span>Get Technical Help</span>
-            </a>
+            </a> -->
         </nav>
 
         <div class="sidebar-footer">
