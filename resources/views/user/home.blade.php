@@ -2,7 +2,7 @@
 
 @section('content')
 
-    <div class="bg-hero-bg pb-8">
+    <div class="bg-hero-bg pt-24 pb-8">
         <div class="container mx-auto px-4 sm:px-6 lg:px-8">
             <section class="pb-8 pt-8">
                 <div class="flex flex-col md:flex-row items-center justify-between gap-12">
@@ -77,17 +77,19 @@
             <div class="flex justify-between items-end mb-8">
                 <div>
                     <span class="text-pink-600 font-bold mb-1 block">Featured</span>
-                    <h2 class="text-3xl font-extrabold text-gray-900">Featured Pharmacy Essentials</h2>
-                    <p class="text-gray-500 max-w-lg">Nec leo amet suscipit nulla. Nullam vitae sit tempus diam.</p>
+                    <h2 class="text-3xl font-extrabold text-gray-900">Top Picks for Your Wellness</h2>
+                    <p class="text-gray-500 max-w-lg mt-2">Curated selection of essential health products recommended by our experts.</p>
                 </div>
                 <a href="#" class="text-blue-600 font-semibold hover:text-blue-800 transition duration-150 hidden sm:block">All Products &rarr;</a>
             </div>
     
             <div class="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6">
                 
-                <div class="bg-white p-4 rounded-xl shadow-lg">
-                    <div class="bg-gray-900 h-48 rounded-lg mb-4 relative flex items-center justify-center">
-                        <button class="absolute top-3 right-3 bg-blue-600/70 p-2 rounded-full text-white hover:bg-blue-700 transition duration-150">&rarr;</button>
+                {{-- Card 1: Acetaminophen Pills (Tombol keranjang Dihilangkan, Background Biru Muda) --}}
+                <div class="bg-blue-50 p-4 rounded-xl shadow-lg transition duration-300 transform hover:shadow-xl hover:scale-[1.03] cursor-pointer">
+                    <div class="bg-hero-bg h-48 rounded-lg mb-4 relative flex items-center justify-center overflow-hidden">
+                        <img src="{{ asset('images/homepage/AcetaminophenPills.jpg') }}" alt="Acetaminophen Pills" class="w-full h-full object-contain p-4">
+                        {{-- Tombol Keranjang/Aksi Dihilangkan --}}
                     </div>
                     <h3 class="font-semibold text-lg text-gray-900">Acetaminophen Pills</h3>
                     <p class="text-gray-500 text-sm">Pain Reliever</p>
@@ -97,8 +99,12 @@
                     </div>
                 </div>
     
-                <div class="bg-white p-4 rounded-xl shadow-lg">
-                    <div class="bg-gray-900 h-48 rounded-lg mb-4"></div>
+                {{-- Card 2: Throat Lozenges Syrup (Tombol keranjang Dihilangkan, Background Biru Muda) --}}
+                <div class="bg-blue-50 p-4 rounded-xl shadow-lg transition duration-300 transform hover:shadow-xl hover:scale-[1.03] cursor-pointer">
+                    <div class="bg-hero-bg h-48 rounded-lg mb-4 relative flex items-center justify-center overflow-hidden">
+                        <img src="{{ asset('images/homepage/ThroatLozengesSyrup.jpg') }}" alt="Throat Lozenges Syrup" class="w-full h-full object-contain p-4">
+                        {{-- Tombol Keranjang/Aksi Dihilangkan --}}
+                    </div>
                     <h3 class="font-semibold text-lg text-gray-900">Throat Lozenges Syrup</h3>
                     <p class="text-gray-500 text-sm">Cough & Cold</p>
                     <div class="mt-2">
@@ -107,8 +113,12 @@
                     </div>
                 </div>
     
-                <div class="bg-white p-4 rounded-xl shadow-lg">
-                    <div class="bg-gray-900 h-48 rounded-lg mb-4"></div>
+                {{-- Card 3: Multivitamin B6+ (Tombol keranjang Dihilangkan, Background Biru Muda) --}}
+                <div class="bg-blue-50 p-4 rounded-xl shadow-lg transition duration-300 transform hover:shadow-xl hover:scale-[1.03] cursor-pointer">
+                    <div class="bg-hero-bg h-48 rounded-lg mb-4 relative flex items-center justify-center overflow-hidden">
+                        <img src="{{ asset('images/homepage/Multivitamin.jpg') }}" alt="Multivitamin B6+" class="w-full h-full object-contain p-4">
+                        {{-- Tombol Keranjang/Aksi Dihilangkan --}}
+                    </div>
                     <h3 class="font-semibold text-lg text-gray-900">Multivitamin B6+</h3>
                     <p class="text-gray-500 text-sm">Vitamins</p>
                     <div class="mt-2">
@@ -117,8 +127,12 @@
                     </div>
                 </div>
                 
-                <div class="bg-white p-4 rounded-xl shadow-lg">
-                    <div class="bg-gray-900 h-48 rounded-lg mb-4"></div>
+                {{-- Card 4: Dental Floss (Tombol keranjang Dihilangkan, Background Biru Muda) --}}
+                <div class="bg-blue-50 p-4 rounded-xl shadow-lg transition duration-300 transform hover:shadow-xl hover:scale-[1.03] cursor-pointer">
+                    <div class="bg-hero-bg h-48 rounded-lg mb-4 relative flex items-center justify-center overflow-hidden">
+                        <img src="{{ asset('images/homepage/DentalFloss.jpg') }}" alt="Dental Floss" class="w-full h-full object-contain p-4">
+                        {{-- Tombol Keranjang/Aksi Dihilangkan --}}
+                    </div>
                     <h3 class="font-semibold text-lg text-gray-900">Dental Floss</h3>
                     <p class="text-gray-500 text-sm">Oral Care</p>
                     <div class="mt-2">
@@ -127,16 +141,19 @@
                 </div>
     
             </div>
+            
+            <div class="flex justify-end mt-4">
+                <a href="#" class="text-blue-600 font-semibold hover:text-blue-800 transition duration-150 sm:hidden">All Products &rarr;</a>
+            </div>
         </section>
     
         <section class="mb-16">
             <h2 class="sr-only">Product Categories</h2>
             <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
-                
                 <div class="bg-white p-6 rounded-xl shadow-lg relative h-64 overflow-hidden">
                     <div class="absolute inset-0 bg-gray-900 opacity-80 rounded-xl"></div>
                     <div class="relative z-10 text-white">
-                        <h3 class="text-2xl font-bold mb-2">Pain Relievers</h3>
+                        <h3 class="text-2xl font-bold mb-2 text-white">Pain Relievers</h3>
                         <p class="text-gray-300 max-w-sm">Libero diam auctor tristique hendrerit eu in vel elit.</p>
                         <a href="#" class="text-blue-400 font-semibold mt-4 block hover:text-blue-200">Explore Category &rarr;</a>
                     </div>
@@ -220,5 +237,4 @@
             </div>
         </section>
     </div>
-
 @endsection
