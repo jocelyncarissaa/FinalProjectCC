@@ -149,7 +149,7 @@
                 <div class="bg-white p-6 rounded-xl shadow-lg relative h-64 overflow-hidden">
                     <div class="absolute inset-0 bg-gray-900 opacity-80 rounded-xl"></div>
                     <div class="relative z-10 text-white">
-                        <h3 class="text-2xl font-bold mb-2 text-white">Pain Relievers</h3>
+                        <h3 class="text-2xl font-bold mb-2 text-white">Antidiabetic</h3>
                         <p class="text-gray-300 max-w-sm">Libero diam auctor tristique hendrerit eu in vel elit.</p>
                         <a href="#" class="text-blue-400 font-semibold mt-4 block hover:text-blue-200">Explore Category &rarr;</a>
                     </div>
@@ -161,7 +161,7 @@
     
                 <div class="bg-white p-6 rounded-xl shadow-lg relative h-64 overflow-hidden">
                     <div class="relative z-10">
-                        <h3 class="text-2xl font-bold mb-2 text-gray-900">Allergy Medications</h3>
+                        <h3 class="text-2xl font-bold mb-2 text-gray-900">Antiseptic</h3>
                         <p class="text-gray-600 max-w-sm">Libero diam auctor tristique hendrerit eu in vel elit.</p>
                         <a href="#" class="text-blue-600 font-semibold mt-4 block hover:text-blue-800">Explore Category &rarr;</a>
                     </div>
@@ -170,7 +170,7 @@
                 
                 <div class="bg-white p-6 rounded-xl shadow-lg relative h-64 overflow-hidden">
                     <div class="relative z-10">
-                        <h3 class="text-2xl font-bold mb-2 text-gray-900">First Aid Supply</h3>
+                        <h3 class="text-2xl font-bold mb-2 text-gray-900">Antibiotic</h3>
                         <p class="text-gray-600 max-w-sm">Libero diam auctor tristique hendrerit eu in vel elit.</p>
                         <a href="#" class="text-blue-600 font-semibold mt-4 block hover:text-blue-800">Explore Category &rarr;</a>
                     </div>
@@ -179,7 +179,7 @@
                 
                 <div class="bg-white p-6 rounded-xl shadow-lg relative h-64 overflow-hidden">
                     <div class="relative z-10">
-                        <h3 class="text-2xl font-bold mb-2 text-gray-900">Dental Care</h3>
+                        <h3 class="text-2xl font-bold mb-2 text-gray-900">Antifungal</h3>
                         <p class="text-gray-600 max-w-sm">Libero diam auctor tristique hendrerit eu in vel elit.</p>
                         <a href="#" class="text-blue-600 font-semibold mt-4 block hover:text-blue-800">Explore Category &rarr;</a>
                     </div>
