@@ -85,56 +85,52 @@
     
             <div class="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6">
                 
-                {{-- Card 1: Acetaminophen Pills (Tombol keranjang Dihilangkan, Background Biru Muda) --}}
+                {{-- Card 1: Clarinazole --}}
                 <div class="bg-blue-50 p-4 rounded-xl shadow-lg transition duration-300 transform hover:shadow-xl hover:scale-[1.03] cursor-pointer">
                     <div class="bg-hero-bg h-48 rounded-lg mb-4 relative flex items-center justify-center overflow-hidden">
-                        <img src="{{ asset('images/homepage/AcetaminophenPills.jpg') }}" alt="Acetaminophen Pills" class="w-full h-full object-contain p-4">
-                        {{-- Tombol Keranjang/Aksi Dihilangkan --}}
+                        <img src="{{ asset('images/homepage/Clarinazole.jpg') }}" alt="Acetaminophen Pills" class="w-full h-full object-contain p-4">
                     </div>
-                    <h3 class="font-semibold text-lg text-gray-900">Acetaminophen Pills</h3>
-                    <p class="text-gray-500 text-sm">Pain Reliever</p>
+                    <h3 class="font-semibold text-lg text-gray-900">Clarinazole</h3>
+                    <p class="text-gray-500 text-sm">Antifungal</p>
                     <div class="mt-2">
                         <span class="text-gray-400 line-through mr-2">$16.00</span>
                         <span class="text-red-600 font-bold">$12.50</span>
                     </div>
                 </div>
     
-                {{-- Card 2: Throat Lozenges Syrup (Tombol keranjang Dihilangkan, Background Biru Muda) --}}
+                {{-- Card 2: Cefcillin --}}
                 <div class="bg-blue-50 p-4 rounded-xl shadow-lg transition duration-300 transform hover:shadow-xl hover:scale-[1.03] cursor-pointer">
                     <div class="bg-hero-bg h-48 rounded-lg mb-4 relative flex items-center justify-center overflow-hidden">
-                        <img src="{{ asset('images/homepage/ThroatLozengesSyrup.jpg') }}" alt="Throat Lozenges Syrup" class="w-full h-full object-contain p-4">
-                        {{-- Tombol Keranjang/Aksi Dihilangkan --}}
+                        <img src="{{ asset('images/homepage/Cefcillin.jpg') }}" alt="Throat Lozenges Syrup" class="w-full h-full object-contain p-4">
                     </div>
-                    <h3 class="font-semibold text-lg text-gray-900">Throat Lozenges Syrup</h3>
-                    <p class="text-gray-500 text-sm">Cough & Cold</p>
+                    <h3 class="font-semibold text-lg text-gray-900">Cefcillin</h3>
+                    <p class="text-gray-500 text-sm">Antipyretic</p>
                     <div class="mt-2">
                         <span class="text-gray-400 line-through mr-2">$16.00</span>
                         <span class="text-red-600 font-bold">$12.00</span>
                     </div>
                 </div>
     
-                {{-- Card 3: Multivitamin B6+ (Tombol keranjang Dihilangkan, Background Biru Muda) --}}
+                {{-- Card 3: Ibupronazole --}}
                 <div class="bg-blue-50 p-4 rounded-xl shadow-lg transition duration-300 transform hover:shadow-xl hover:scale-[1.03] cursor-pointer">
                     <div class="bg-hero-bg h-48 rounded-lg mb-4 relative flex items-center justify-center overflow-hidden">
-                        <img src="{{ asset('images/homepage/Multivitamin.jpg') }}" alt="Multivitamin B6+" class="w-full h-full object-contain p-4">
-                        {{-- Tombol Keranjang/Aksi Dihilangkan --}}
+                        <img src="{{ asset('images/homepage/Ibupronazole.jpg') }}" alt="Multivitamin B6+" class="w-full h-full object-contain p-4">
                     </div>
-                    <h3 class="font-semibold text-lg text-gray-900">Multivitamin B6+</h3>
-                    <p class="text-gray-500 text-sm">Vitamins</p>
+                    <h3 class="font-semibold text-lg text-gray-900">Ibupronazole</h3>
+                    <p class="text-gray-500 text-sm">Analgesic</p>
                     <div class="mt-2">
                         <span class="text-gray-400 line-through mr-2">$18.99</span>
                         <span class="text-red-600 font-bold">$12.00</span>
                     </div>
                 </div>
                 
-                {{-- Card 4: Dental Floss (Tombol keranjang Dihilangkan, Background Biru Muda) --}}
+                {{-- Card 4: Metoprofen --}}
                 <div class="bg-blue-50 p-4 rounded-xl shadow-lg transition duration-300 transform hover:shadow-xl hover:scale-[1.03] cursor-pointer">
                     <div class="bg-hero-bg h-48 rounded-lg mb-4 relative flex items-center justify-center overflow-hidden">
-                        <img src="{{ asset('images/homepage/DentalFloss.jpg') }}" alt="Dental Floss" class="w-full h-full object-contain p-4">
-                        {{-- Tombol Keranjang/Aksi Dihilangkan --}}
+                        <img src="{{ asset('images/homepage/Metoprofen.jpg') }}" alt="Dental Floss" class="w-full h-full object-contain p-4">
                     </div>
-                    <h3 class="font-semibold text-lg text-gray-900">Dental Floss</h3>
-                    <p class="text-gray-500 text-sm">Oral Care</p>
+                    <h3 class="font-semibold text-lg text-gray-900">Metoprofen</h3>
+                    <p class="text-gray-500 text-sm">Antiseptic</p>
                     <div class="mt-2">
                         <span class="text-red-600 font-bold">$5.50</span>
                     </div>
