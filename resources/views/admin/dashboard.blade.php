@@ -619,9 +619,11 @@
 
         <nav class="sidebar-menu">
             <div class="menu-section-title">Main</div>
-            <div class="menu-item active">
-                <span>Dashboard</span>
-            </div>
+           <a href="{{ route('admin.dashboard') }}"
+                class="menu-item {{ request()->routeIs('admin.dashboard') ? 'active' : '' }}">
+                    <span>Dashboard</span>
+            </a>
+
             <a href="{{ route('admin.orders.index') }}" class="menu-item {{ request()->routeIs('admin.orders.*') ? 'active' : '' }}">
                 <span>Orders</span>
                 @php
@@ -737,16 +739,21 @@
         <!-- Top stats cards -->
         <section class="stats-grid">
             <div class="stat-card card-green">
-                <div class="stat-header">
-                    <span>Inventory Status</span>
-                    <span>✅</span>
-                </div>
-                <div class="stat-main">Good</div>
-                <div class="stat-footer">
-                    <span class="badge-soft badge-success">Up to date</span>
-                    <button class="btn" style="font-size:0.78rem;">View Detailed Report →</button>
-                </div>
+                    <div class="stat-header">
+                        <span>Inventory Status</span>
+                        <span>✅</span>
+                    </div>
+                    <div class="stat-main">{{ $inventoryStatus }}</div>
+                    <div class="stat-footer">
+                        <span class="badge-soft badge-success">Up to date</span>
+                        <a href="{{ route('admin.items.index') }}"
+                        class="btn"
+                        style="font-size:0.78rem;">
+                            View Detailed Report →
+                        </a>
+                    </div>
             </div>
+
 
             <div class="stat-card card-yellow">
                 <div class="stat-header">
@@ -764,10 +771,14 @@
                 <div class="stat-header">
                     <span>Medicines Available</span>
                 </div>
-                <div class="stat-value">298</div>
+                <div class="stat-value">{{ $totalMedicines }}</div>
                 <div class="stat-footer">
-                    <span class="panel-metric-label">In stock</span>
-                    <button class="btn" style="font-size:0.78rem;">Visit Inventory →</button>
+                    <span class="panel-metric-label">In system</span>
+                    <a href="{{ route('admin.items.index') }}"
+                    class="btn"
+                    style="font-size:0.78rem;">
+                        Visit Inventory →
+                    </a>
                 </div>
             </div>
 
@@ -775,40 +786,46 @@
                 <div class="stat-header">
                     <span>Medicine Shortage</span>
                 </div>
-                <div class="stat-value">01</div>
+                <div class="stat-value">
+                    {{ $lowStock + $outOfStock }}
+                </div>
                 <div class="stat-footer">
-                    <span class="panel-metric-label">Needs restock</span>
-                    <button class="btn" style="font-size:0.78rem; color:#B91C1C; border-color:#FCA5A5;">Resolve Now →</button>
+                    <span class="panel-metric-label">Low / Out of stock</span>
+                    <a href="{{ route('admin.items.index') }}"
+                    class="btn"
+                    style="font-size:0.78rem; color:#B91C1C; border-color:#FCA5A5;">
+                        Resolve Now →
+                    </a>
                 </div>
             </div>
+
         </section>
 
         <!-- Bottom panels -->
         <section class="bottom-grid">
             <div class="panel">
-                <div class="panel-header">
-                    <span class="panel-title">Inventory</span>
-                    <span class="panel-link">Go to Configuration →</span>
-                </div>
+    <div class="panel-header">
+        <span class="panel-title">Inventory</span>
+        <a href="{{ route('admin.items.index') }}" class="panel-link">
+            Go to Inventory →
+        </a>
+            </div>
                 <div class="panel-body">
                     <div>
                         <div class="panel-metric-label">Total no. of Medicines</div>
-                        <div class="panel-metric-value">298</div>
+                        <div class="panel-metric-value">{{ $totalMedicines }}</div>
                     </div>
                     <div>
                         <div class="panel-metric-label">Medicine Groups</div>
-                        <div class="panel-metric-value">24</div>
-                    </div>
-                    <div>
-                        <div class="panel-metric-label">Expiring Soon</div>
-                        <div class="panel-metric-value">12</div>
+                        <div class="panel-metric-value">{{ $medicineGroups }}</div>
                     </div>
                     <div>
                         <div class="panel-metric-label">Out of Stock</div>
-                        <div class="panel-metric-value">3</div>
+                        <div class="panel-metric-value">{{ $outOfStock }}</div>
                     </div>
                 </div>
             </div>
+
 
             <div class="panel">
                 <div class="panel-header">
@@ -837,7 +854,7 @@
                 </div>
             </div>
 
-            <div class="panel">
+            {{-- <div class="panel">
                 <div class="panel-header">
                     <span class="panel-title">My Pharmacy</span>
                     <span class="panel-link">Go to User Management →</span>
@@ -860,9 +877,9 @@
                         <div class="panel-metric-value">2</div>
                     </div>
                 </div>
-            </div>
+            </div> --}}
 
-            <div class="panel">
+            {{-- <div class="panel">
                 <div class="panel-header">
                     <span class="panel-title">Customers</span>
                     <span class="panel-link">Go to Customers Page →</span>
@@ -885,7 +902,7 @@
                         <div class="panel-metric-value">320</div>
                     </div>
                 </div>
-            </div>
+            </div> --}}
         </section>
     </main>
 </div>

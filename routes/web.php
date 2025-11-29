@@ -5,6 +5,7 @@ use App\Http\Controllers\UserController;
 use App\Http\Controllers\AuthController;
 use App\Http\Controllers\Admin\OrderController;
 use App\Http\Controllers\Admin\ItemController;
+use App\Http\Controllers\Admin\DashboardController;
 
 
 
@@ -42,10 +43,13 @@ Route::post('/register', [AuthController::class, 'register'])->name('register.po
 Route::middleware('auth')->group(function () {
 
     // Admin dashboard
-    Route::get('/admin/dashboard', function () {
-        // nanti bisa diganti Controller kalau mau dynamic
-        return view('admin.dashboard');
-    })->name('admin.dashboard');
+    // Route::get('/admin/dashboard', function () {
+    //     // nanti bisa diganti Controller kalau mau dynamic
+    //     return view('admin.dashboard');
+    // })->name('admin.dashboard');
+
+    Route::get('/admin/dashboard', [DashboardController::class, 'index'])
+    ->name('admin.dashboard');
 
     // Profile page
     Route::get('/profile', [AuthController::class, 'profile'])->name('profile');
@@ -68,15 +72,18 @@ Route::middleware('auth')->group(function () {
     // Optional: Update order status
     Route::post('/admin/orders/{id}/update-status', [OrderController::class, 'updateStatus'])->name('admin.orders.update_status');
 
+    // == Items ===
     Route::get('/admin/items', [ItemController::class, 'index'])->name('admin.items.index');
 
     Route::get('/items/create',    [ItemController::class, 'create'])->name('admin.items.create');
-     Route::post('/items',          [ItemController::class, 'store'])->name('admin.items.store');
+    Route::post('/items',          [ItemController::class, 'store'])->name('admin.items.store');
 
     Route::get('/items/{item}/edit', [ItemController::class, 'edit'])->name('admin.items.edit');
     Route::put('/items/{item}', [ItemController::class, 'update'])->name('admin.items.update');
 
     Route::delete('/items/{item}', [ItemController::class, 'destroy'])->name('admin.items.destroy');
+
+
 
 });
 

@@ -54,7 +54,7 @@
                         @forelse ($items as $item)
                             @php
                                 $stock  = optional($item->inventory)->stock ?? 0;
-                                $expiry = optional($item->inventory)->expiry_date;
+                                // $expiry = optional($item->inventory)->expiry_date;
                             @endphp
 
                             <tr>
@@ -116,11 +116,11 @@
                                         </span>
                                     @endif
 
-                                    @if ($expiry)
+                                    {{-- @if ($expiry)
                                         <div class="small text-muted mt-1" style="font-size: 0.75rem;">
                                             Exp: {{ \Carbon\Carbon::parse($expiry)->format('d M Y') }}
                                         </div>
-                                    @endif
+                                    @endif --}}
                                 </td>
 
                                {{-- Action --}}

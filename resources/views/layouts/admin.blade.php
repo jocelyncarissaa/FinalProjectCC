@@ -621,7 +621,8 @@
         <nav class="sidebar-menu">
             <div class="menu-section-title">Main</div>
             <a href="{{ route('admin.dashboard') }}" class="menu-item {{ request()->routeIs('admin.dashboard') ? 'active' : '' }}">
-            <span>Dashboard</span>
+                <span>Dashboard</span>
+            </a>
 
             <a href="{{ route('admin.orders.index') }}" class="menu-item {{ request()->routeIs('admin.orders.*') ? 'active' : '' }}">
                 <span>Orders</span>
@@ -636,40 +637,17 @@
                     <span class="menu-badge" style="background: #F59E0B;">{{ $pendingCount }}</span>
                 @endif
             </a>
-            <a href="#" class="menu-item">
-                <span>Items</span>
+           <a href="{{ route('admin.items.index') }}"
+                class="menu-item {{ request()->routeIs('admin.items.*') ? 'active' : '' }}">
+                    <span>Items</span>
             </a>
+
 
             <a href="#" class="menu-item">
                 <span>Reports</span>
             </a>
 
-            <!-- <a href="#" class="menu-item">
-                <span>Configuration</span>
-            </a>
 
-            <div class="menu-section-title">Communication</div>
-            <a href="#" class="menu-item">
-                <span>Contact Management</span>
-            </a>
-            <a href="#" class="menu-item">
-                <span>Notifications</span>
-                <span class="menu-badge">1</span>
-            </a>
-            <a href="#" class="menu-item">
-                <span>Chat with Visitors</span>
-            </a>
-
-            <div class="menu-section-title">System</div>
-            <a href="#" class="menu-item">
-                <span>Application Settings</span>
-            </a>
-            <a href="#" class="menu-item">
-                <span>Covid-19</span>
-            </a>
-            <a href="#" class="menu-item">
-                <span>Get Technical Help</span>
-            </a> -->
         </nav>
 
         <div class="sidebar-footer">
