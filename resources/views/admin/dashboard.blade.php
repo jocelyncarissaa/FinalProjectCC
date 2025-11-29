@@ -194,7 +194,7 @@
             gap: 1rem;
         }
 
-        .search-wrapper {
+        /* .search-wrapper {
             flex: 1;
             max-width: 480px;
         }
@@ -220,7 +220,7 @@
             transform: translateY(-50%);
             font-size: 0.9rem;
             color: #9CA3AF;
-        }
+        } */
 
         .topbar-right {
             display: flex;
@@ -624,23 +624,26 @@
             </div>
             <a href="{{ route('admin.orders.index') }}" class="menu-item {{ request()->routeIs('admin.orders.*') ? 'active' : '' }}">
                 <span>Orders</span>
-                @php 
+                @php
                     // Hitung order pending langsung di view (cara cepat)
-                    $pendingCount = \App\Models\Order::where('status', 'pending')->count(); 
+                    $pendingCount = \App\Models\Order::where('status', 'pending')->count();
                 @endphp
-                
+
                 @if($pendingCount > 0)
                     <span class="menu-badge" style="background: #F59E0B;">{{ $pendingCount }}</span>
                 @endif
             </a>
-            <a href="#" class="menu-item">
-                <span>Inventory</span>
+
+           <a href="{{ route('admin.items.index') }}"
+                class="menu-item {{ request()->routeIs('admin.items.*') ? 'active' : '' }}">
+                <span>Items</span>
             </a>
+
 
             <a href="#" class="menu-item">
                 <span>Reports</span>
             </a>
-            
+
             <!-- <a href="#" class="menu-item">
                 <span>Configuration</span>
             </a>
@@ -681,12 +684,12 @@
         <div class="topbar">
             <button class="sidebar-toggle" onclick="toggleSidebar()">☰</button>
 
-            <div class="search-wrapper">
+            {{-- <div class="search-wrapper">
                 <div class="search-box">
                     <span class="search-icon">🔍</span>
                     <input type="text" placeholder="Search for anything here...">
                 </div>
-            </div>
+            </div> --}}
 
             <div class="topbar-right">
                 <div class="language-switch">
@@ -706,13 +709,13 @@
                     <div class="greeting-sub">{{ $now->format('d F Y · H:i') }}</div>
                 </div>
 
-            <div class="dropdown">
+            {{-- <div class="dropdown">
                 <button class="btn" onclick="toggleReportMenu(event)">
                     Download Report ▾
                 </button>
 
                 <div id="reportMenu" class="dropdown-menu">
-                    {{-- masih dummy --}}
+
                     <a href="#">
                         📊 <span>Excel</span>
                     </a>
@@ -720,7 +723,7 @@
                         📄 <span>PDF</span>
                     </a>
                 </div>
-            </div>
+            </div> --}}
 
             </div>
         </div>

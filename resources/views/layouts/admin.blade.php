@@ -525,6 +525,7 @@
             .stats-grid {
                 grid-template-columns: 1fr;
             }
+
         }
     </style>
 
@@ -621,28 +622,28 @@
             <div class="menu-section-title">Main</div>
             <a href="{{ route('admin.dashboard') }}" class="menu-item {{ request()->routeIs('admin.dashboard') ? 'active' : '' }}">
             <span>Dashboard</span>
-            
+
             <a href="{{ route('admin.orders.index') }}" class="menu-item {{ request()->routeIs('admin.orders.*') ? 'active' : '' }}">
                 <span>Orders</span>
-                
+
                 {{-- Fitur Bonus: Badge Jumlah Order Pending --}}
-                @php 
+                @php
                     // Hitung order pending langsung di view (cara cepat)
-                    $pendingCount = \App\Models\Order::where('status', 'pending')->count(); 
+                    $pendingCount = \App\Models\Order::where('status', 'pending')->count();
                 @endphp
-                
+
                 @if($pendingCount > 0)
                     <span class="menu-badge" style="background: #F59E0B;">{{ $pendingCount }}</span>
                 @endif
             </a>
             <a href="#" class="menu-item">
-                <span>Inventory</span>
+                <span>Items</span>
             </a>
 
             <a href="#" class="menu-item">
                 <span>Reports</span>
             </a>
-            
+
             <!-- <a href="#" class="menu-item">
                 <span>Configuration</span>
             </a>
@@ -684,10 +685,10 @@
             <button class="sidebar-toggle" onclick="toggleSidebar()">☰</button>
 
             <div class="search-wrapper">
-                <div class="search-box">
+                {{-- <div class="search-box">
                     <span class="search-icon">🔍</span>
                     <input type="text" placeholder="Search for anything here...">
-                </div>
+                </div> --}}
             </div>
 
             <div class="topbar-right">

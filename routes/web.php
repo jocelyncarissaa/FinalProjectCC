@@ -4,6 +4,9 @@ use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\UserController;
 use App\Http\Controllers\AuthController;
 use App\Http\Controllers\Admin\OrderController;
+use App\Http\Controllers\Admin\ItemController;
+
+
 
 /*
 |--------------------------------------------------------------------------
@@ -58,12 +61,22 @@ Route::middleware('auth')->group(function () {
 
     // List all orders
     Route::get('/admin/orders', [OrderController::class, 'index'])->name('admin.orders.index');
-    
+
     // View single order detail
     Route::get('/admin/orders/{id}', [OrderController::class, 'show'])->name('admin.orders.show');
-    
+
     // Optional: Update order status
     Route::post('/admin/orders/{id}/update-status', [OrderController::class, 'updateStatus'])->name('admin.orders.update_status');
+
+    Route::get('/admin/items', [ItemController::class, 'index'])->name('admin.items.index');
+
+    Route::get('/items/create',    [ItemController::class, 'create'])->name('admin.items.create');
+     Route::post('/items',          [ItemController::class, 'store'])->name('admin.items.store');
+
+    Route::get('/items/{item}/edit', [ItemController::class, 'edit'])->name('admin.items.edit');
+    Route::put('/items/{item}', [ItemController::class, 'update'])->name('admin.items.update');
+
+    Route::delete('/items/{item}', [ItemController::class, 'destroy'])->name('admin.items.destroy');
 
 });
 
