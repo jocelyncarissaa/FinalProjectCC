@@ -6,7 +6,7 @@ use App\Http\Controllers\AuthController;
 use App\Http\Controllers\Admin\OrderController;
 use App\Http\Controllers\Admin\ItemController;
 use App\Http\Controllers\Admin\DashboardController;
-
+use App\Http\Controllers\Admin\ShipmentController;
 
 
 /*
@@ -83,7 +83,11 @@ Route::middleware('auth')->group(function () {
 
     Route::delete('/items/{item}', [ItemController::class, 'destroy'])->name('admin.items.destroy');
 
+    // Shipment Report
 
-
+   Route::get('/admin/shipments', [ShipmentController::class, 'index'])->name('admin.shipments.index');
+   Route::get('/admin/shipments/create', [ShipmentController::class, 'create'])->name('admin.shipments.create');
+   Route::post('/admin/shipments', [ShipmentController::class, 'store'])->name('admin.shipments.store');
+   Route::get('/admin/shipments/{shipment}', [ShipmentController::class, 'show'])->name('admin.shipments.show');
 });
 

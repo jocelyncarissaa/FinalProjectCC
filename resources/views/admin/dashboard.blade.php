@@ -642,8 +642,9 @@
             </a>
 
 
-            <a href="#" class="menu-item">
-                <span>Reports</span>
+            <a href="{{ route('admin.items.index')}}"
+                class="menu-item {{ request()->routeIs('admin.shipments.*') ? 'active' : '' }}">
+                <span>Shipment</span>
             </a>
 
             <!-- <a href="#" class="menu-item">

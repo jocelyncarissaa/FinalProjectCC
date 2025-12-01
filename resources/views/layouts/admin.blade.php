@@ -620,16 +620,14 @@
 
         <nav class="sidebar-menu">
             <div class="menu-section-title">Main</div>
-            <a href="{{ route('admin.dashboard') }}" class="menu-item {{ request()->routeIs('admin.dashboard') ? 'active' : '' }}">
+            <a href="{{ route('admin.dashboard') }}"
+                class="menu-item {{ request()->routeIs('admin.dashboard') ? 'active' : '' }}">
                 <span>Dashboard</span>
             </a>
 
             <a href="{{ route('admin.orders.index') }}" class="menu-item {{ request()->routeIs('admin.orders.*') ? 'active' : '' }}">
                 <span>Orders</span>
-
-                {{-- Fitur Bonus: Badge Jumlah Order Pending --}}
                 @php
-                    // Hitung order pending langsung di view (cara cepat)
                     $pendingCount = \App\Models\Order::where('status', 'pending')->count();
                 @endphp
 
@@ -642,9 +640,9 @@
                     <span>Items</span>
             </a>
 
-
-            <a href="#" class="menu-item">
-                <span>Reports</span>
+            <a href="{{route('admin.shipments.index')}}"
+                class="menu-item {{ request()->routeIs('admin.shipments.*') ? 'active' : ''}}">
+                <span>Shipments</span>
             </a>
 
 
