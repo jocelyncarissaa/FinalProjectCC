@@ -225,52 +225,259 @@
                         >
                     </div>
                 </div>
-    
             </div>
         </section>
     
         <section class="pb-16 pt-8">
-            <div class="flex flex-col md:flex-row gap-12">
-                
-                <div class="w-full md:w-1/2">
-                    <span class="text-pink-600 font-bold mb-1 block">Why Us</span>
-                    <h2 class="text-3xl font-extrabold text-gray-900 mb-8">Our Commitment to Quality</h2>
+            <div class="mb-8"> 
+                <span class="text-pink-600 font-bold mb-1 block uppercase text-xs tracking-widest">Review</span>
+                <h2 class="text-3xl font-extrabold text-gray-900">Testimonials That Inspire Us</h2>
+                <p class="text-gray-600 max-w-xl mt-2">
+                    Hear inspiring stories from customers who have experienced the real benefits of PharmaPlus.
+                </p>
+            </div>
+
+            <div class="relative overflow-hidden">
+                <div id="testimonial-slider" class="flex transition-transform duration-500 ease-in-out"> 
                     
-                    <div class="space-y-6">
-                        
-                        <div class="flex items-start">
-                            <div class="p-3 bg-blue-100 text-blue-600 rounded-lg mr-4">🛒</div>
-                            <div>
-                                <h4 class="font-bold text-gray-900">Wide Product Range</h4>
-                                <p class="text-gray-600 text-sm max-w-sm">Libero diam auctor tristique hendrerit eu in vel elit.</p>
+                    {{-- Testimonial 1 (Content Revised, Padding Adjusted) --}}
+                    <div class="min-w-full px-4 sm:px-6 lg:px-8"> 
+                        <div class="cursor-pointer max-w-3xl mx-auto"> 
+                            <div class="bg-white px-6 py-3 md:px-10 md:py-6 rounded-2xl shadow-xl border border-gray-100 relative">
+                                <div class="absolute top-0 left-0 -ml-4 -mt-4 p-3 rounded-full bg-blue-100 border-4 border-white">
+                                    <img 
+                                        src="{{ asset('images/homepage/quote.png') }}" 
+                                        alt="Quote Icon" 
+                                        class="w-8 h-8 text-blue-500 object-contain"
+                                    >
+                                </div>
+                                
+                                <div class="relative z-10 pt-4">
+                                    <p class="text-xl italic text-gray-700 leading-relaxed mb-6">
+                                        “I love the ease of checkout and the fast, reliable delivery! Even during flu season, my orders arrive quickly. The product quality is consistently high.”
+                                    </p>
+                                    
+                                    <div class="flex items-center">
+                                        <div class="w-12 h-12 rounded-full mr-4 overflow-hidden"> 
+                                            <img 
+                                                src="{{ asset('images/homepage/lindaparker.jpg') }}" 
+                                                alt="Linda Parker Profile" 
+                                                class="w-full h-full object-cover"
+                                            >
+                                        </div>
+                                        <div>
+                                            <p class="font-bold text-gray-900">Linda Parker</p>
+                                            <p class="text-sm text-gray-500">Loyal Customer, 55 years old</p>
+                                        </div>
+                                    </div>
+                                </div>
                             </div>
                         </div>
-                        
-                        <div class="flex items-start">
-                            <div class="p-3 bg-blue-100 text-blue-600 rounded-lg mr-4">🛡️</div>
-                            <div>
-                                <h4 class="font-bold text-gray-900">Quality Assurance</h4>
-                                <p class="text-gray-600 text-sm max-w-sm">Libero diam auctor tristique hendrerit eu in vel elit.</p>
+                    </div>
+                    
+                    {{-- Testimonial 2 (Content Revised) --}}
+                    <div class="min-w-full px-4 sm:px-6 lg:px-8">
+                        <div class="cursor-pointer max-w-3xl mx-auto">
+                            <div class="bg-white px-6 py-3 md:px-10 md:py-6 rounded-2xl shadow-xl border border-gray-100 relative">
+                                <div class="absolute top-0 left-0 -ml-4 -mt-4 p-3 rounded-full bg-blue-100 border-4 border-white">
+                                    <img 
+                                        src="{{ asset('images/homepage/quote.png') }}" 
+                                        alt="Quote Icon" 
+                                        class="w-8 h-8 text-blue-500 object-contain"
+                                    >
+                                </div>
+                                
+                                <div class="relative z-10 pt-4">
+                                    <p class="text-xl italic text-gray-700 leading-relaxed mb-6">
+                                        “The sheer availability of products is fantastic, and everything is always in stock. This shows great scalability and stock management. Delivery is always ahead of schedule.”
+                                    </p>
+                                    
+                                    <div class="flex items-center">
+                                        <div class="w-12 h-12 rounded-full mr-4 overflow-hidden"> 
+                                            <img 
+                                                src="{{ asset('images/homepage/john.jpg') }}" 
+                                                alt="John B. Smith Profile" 
+                                                class="w-full h-full object-cover"
+                                            >
+                                        </div>
+                                        <div>
+                                            <p class="font-bold text-gray-900">John B. Smith</p>
+                                            <p class="text-sm text-gray-500">Subscription Holder, 20 years old</p>
+                                        </div>
+                                    </div>
+                                </div>
                             </div>
                         </div>
-                        
-                        <div class="flex items-start">
-                            <div class="p-3 bg-blue-100 text-blue-600 rounded-lg mr-4">🌱</div>
-                            <div>
-                                <h4 class="font-bold text-gray-900">Eco-Friendly Practices</h4>
-                                <p class="text-gray-600 text-sm max-w-sm">Libero diam auctor tristique hendrerit eu in vel elit.</p>
+                    </div>
+
+                    {{-- Testimonial 3 (Content Revised) --}}
+                    <div class="min-w-full px-4 sm:px-6 lg:px-8">
+                        <div class="cursor-pointer max-w-3xl mx-auto">
+                            <div class="bg-white px-6 py-3 md:px-10 md:py-6 rounded-2xl shadow-xl border border-gray-100 relative">
+                                <div class="absolute top-0 left-0 -ml-4 -mt-4 p-3 rounded-full bg-blue-100 border-4 border-white">
+                                    <img 
+                                        src="{{ asset('images/homepage/quote.png') }}" 
+                                        alt="Quote Icon" 
+                                        class="w-8 h-8 text-blue-500 object-contain"
+                                    >
+                                </div>
+                                
+                                <div class="relative z-10 pt-4">
+                                    <p class="text-xl italic text-gray-700 leading-relaxed mb-6">
+                                        “Ordering my family’s medications here is worry-free. The packaging is secure, and the items are always fresh. This high quality standard is why I keep coming back.”
+                                    </p>
+                                    
+                                    <div class="flex items-center">
+                                        <div class="w-12 h-12 rounded-full mr-4 overflow-hidden"> 
+                                            <img 
+                                                src="{{ asset('images/homepage/sarah.jpg') }}" 
+                                                alt="Sarah K. Lee Profile" 
+                                                class="w-full h-full object-cover"
+                                            >
+                                        </div>
+                                        <div>
+                                            <p class="font-bold text-gray-900">Sarah K. Lee</p>
+                                            <p class="text-sm text-gray-500">Family Health Manager</p>
+                                        </div>
+                                    </div>
+                                </div>
                             </div>
                         </div>
-    
+                    </div>
+
+                    {{-- Testimonial 4 (Content Revised) --}}
+                    <div class="min-w-full px-4 sm:px-6 lg:px-8">
+                        <div class="cursor-pointer max-w-3xl mx-auto">
+                            <div class="bg-white px-6 py-3 md:px-10 md:py-6 rounded-2xl shadow-xl border border-gray-100 relative">
+                                <div class="absolute top-0 left-0 -ml-4 -mt-4 p-3 rounded-full bg-blue-100 border-4 border-white">
+                                    <img 
+                                        src="{{ asset('images/homepage/quote.png') }}" 
+                                        alt="Quote Icon" 
+                                        class="w-8 h-8 text-blue-500 object-contain"
+                                    >
+                                </div>
+                                
+                                <div class="relative z-10 pt-4">
+                                    <p class="text-xl italic text-gray-700 leading-relaxed mb-6">
+                                        “During peak illness season, I was nervous about delays, but my order arrived in less than 24 hours. Incredible logistics and speed! Highly reliable platform.”
+                                    </p>
+                                    
+                                    <div class="flex items-center">
+                                        <div class="w-12 h-12 rounded-full mr-4 overflow-hidden"> 
+                                            <img 
+                                                src="{{ asset('images/homepage/david.jpg') }}" 
+                                                alt="David M. Wong Profile" 
+                                                class="w-full h-full object-cover"
+                                            >
+                                        </div>
+                                        <div>
+                                            <p class="font-bold text-gray-900">David M. Wong</p>
+                                            <p class="text-sm text-gray-500">First-time User</p>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    {{-- Testimonial 5 (Content Revised) --}}
+                    <div class="min-w-full px-4 sm:px-6 lg:px-8">
+                        <div class="cursor-pointer max-w-3xl mx-auto">
+                            <div class="bg-white px-6 py-3 md:px-10 md:py-6 rounded-2xl shadow-xl border border-gray-100 relative">
+                                <div class="absolute top-0 left-0 -ml-4 -mt-4 p-3 rounded-full bg-blue-100 border-4 border-white">
+                                    <img 
+                                        src="{{ asset('images/homepage/quote.png') }}" 
+                                        alt="Quote Icon" 
+                                        class="w-8 h-8 text-blue-500 object-contain"
+                                    >
+                                </div>
+                                
+                                <div class="relative z-10 pt-4">
+                                    <p class="text-xl italic text-gray-700 leading-relaxed mb-6">
+                                        “The system is intuitive, and they handle bulk orders flawlessly. It's clear they are built to handle high demand efficiently while maintaining product integrity.”
+                                    </p>
+                                    
+                                    <div class="flex items-center">
+                                        <div class="w-12 h-12 rounded-full mr-4 overflow-hidden"> 
+                                            <img 
+                                                src="{{ asset('images/homepage/eva.jpg') }}" 
+                                                alt="Eva G. Rodriguez Profile" 
+                                                class="w-full h-full object-cover"
+                                            >
+                                        </div>
+                                        <div>
+                                            <p class="font-bold text-gray-900">Eva G. Rodriguez</p>
+                                            <p class="text-sm text-gray-500">Bulk Buyer, 4 years</p>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
                     </div>
                 </div>
-    
-                <div class="w-full md:w-1/2">
-                    <div class="bg-gray-800 h-[450px] rounded-[30px] shadow-2xl relative">
-                        </div>
-                </div>
-    
             </div>
+
+            <div id="testimonial-dots" class="flex justify-center space-x-2 mt-8">
+                <div class="w-3 h-3 bg-blue-600 rounded-full cursor-pointer" data-slide="0"></div>
+                <div class="w-3 h-3 bg-gray-300 hover:bg-gray-400 rounded-full cursor-pointer" data-slide="1"></div>
+                <div class="w-3 h-3 bg-gray-300 hover:bg-gray-400 rounded-full cursor-pointer" data-slide="2"></div>
+                <div class="w-3 h-3 bg-gray-300 hover:bg-gray-400 rounded-full cursor-pointer" data-slide="3"></div>
+                <div class="w-3 h-3 bg-gray-300 hover:bg-gray-400 rounded-full cursor-pointer" data-slide="4"></div>
+            </div>
+
         </section>
+
     </div>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+            const slider = document.getElementById('testimonial-slider');
+            if (!slider) return;
+
+            const slides = slider.children;
+            const totalSlides = slides.length;
+            const dotsContainer = document.getElementById('testimonial-dots');
+            const dots = dotsContainer ? dotsContainer.children : [];
+            let currentSlide = 0;
+            const intervalTime = 10000;
+
+            function updateSlider() {
+                const offset = -currentSlide * 100;
+                slider.style.transform = `translateX(${offset}%)`;
+                updateDots();
+            }
+
+            function updateDots() {
+                for (let i = 0; i < dots.length; i++) {
+                    if (i === currentSlide) {
+                        dots[i].classList.remove('bg-gray-300', 'hover:bg-gray-400');
+                        dots[i].classList.add('bg-blue-600');
+                    } else {
+                        dots[i].classList.remove('bg-blue-600');
+                        dots[i].classList.add('bg-gray-300', 'hover:bg-gray-400');
+                    }
+                }
+            }
+
+            function nextSlide() {
+                currentSlide = (currentSlide + 1) % totalSlides;
+                updateSlider();
+            }
+
+            let slideInterval = setInterval(nextSlide, intervalTime);
+
+            for (let i = 0; i < dots.length; i++) {
+                dots[i].addEventListener('click', () => {
+                    clearInterval(slideInterval);
+                    
+                    currentSlide = i;
+                    updateSlider();
+
+                    slideInterval = setInterval(nextSlide, intervalTime);
+                });
+            }
+
+            updateSlider();
+        });
+    </script>
 @endsection
