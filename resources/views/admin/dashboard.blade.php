@@ -647,32 +647,7 @@
                 <span>Shipment</span>
             </a>
 
-            <!-- <a href="#" class="menu-item">
-                <span>Configuration</span>
-            </a>
 
-            <div class="menu-section-title">Communication</div>
-            <a href="#" class="menu-item">
-                <span>Contact Management</span>
-            </a>
-            <a href="#" class="menu-item">
-                <span>Notifications</span>
-                <span class="menu-badge">1</span>
-            </a>
-            <a href="#" class="menu-item">
-                <span>Chat with Visitors</span>
-            </a>
-
-            <div class="menu-section-title">System</div>
-            <a href="#" class="menu-item">
-                <span>Application Settings</span>
-            </a>
-            <a href="#" class="menu-item">
-                <span>Covid-19</span>
-            </a>
-            <a href="#" class="menu-item">
-                <span>Get Technical Help</span>
-            </a> -->
         </nav>
 
         <div class="sidebar-footer">
@@ -755,7 +730,7 @@
                     </div>
             </div>
 
-
+            {{-- DARI ORDERR --}}
             <div class="stat-card card-yellow">
                 <div class="stat-header">
                     <span>Revenue</span>
@@ -829,31 +804,37 @@
 
 
             <div class="panel">
-                <div class="panel-header">
-                    <span class="panel-title">Quick Report</span>
-                    <span class="chip">
-                        January 2025 ▾
-                    </span>
-                </div>
-                <div class="panel-body">
-                    <div>
-                        <div class="panel-metric-label">Qty of Medicines Sold</div>
-                        <div class="panel-metric-value">70,856</div>
+                    <div class="panel-header">
+                        <span class="panel-title">Shipment Tracking</span>
+
+                        <a href="{{ route('admin.shipments.index') }}" class="panel-link">
+                            View Shipments →
+                        </a>
                     </div>
-                    <div>
-                        <div class="panel-metric-label">Invoices Generated</div>
-                        <div class="panel-metric-value">5,288</div>
+
+                    <div class="panel-body">
+                            <div>
+                                <div class="panel-metric-label">Shipments Today</div>
+                                <div class="panel-metric-value">{{ $todayShipments }}</div>
+                            </div>
+
+                            <div>
+                                <div class="panel-metric-label">Pending</div>
+                                <div class="panel-metric-value">{{ $pendingShipments }}</div>
+                            </div>
+
+                            <div>
+                                <div class="panel-metric-label">Delivered</div>
+                                <div class="panel-metric-value">{{ $deliveredShipments }}</div>
+                            </div>
+
+                            <div>
+                                <div class="panel-metric-label">Completed</div>
+                                <div class="panel-metric-value">{{ $completedShipments }}</div>
+                            </div>
+                        </div>
                     </div>
-                    <div>
-                        <div class="panel-metric-label">Average Order Value</div>
-                        <div class="panel-metric-value">Rp 150k</div>
-                    </div>
-                    <div>
-                        <div class="panel-metric-label">Refunds</div>
-                        <div class="panel-metric-value">23</div>
-                    </div>
-                </div>
-            </div>
+
 
             {{-- <div class="panel">
                 <div class="panel-header">
