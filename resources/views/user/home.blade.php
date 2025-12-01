@@ -146,44 +146,84 @@
         <section class="mb-16">
             <h2 class="sr-only">Product Categories</h2>
             <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
-                <div class="bg-white p-6 rounded-xl shadow-lg relative h-64 overflow-hidden">
-                    <div class="absolute inset-0 bg-gray-900 opacity-80 rounded-xl"></div>
-                    <div class="relative z-10 text-white">
-                        <h3 class="text-2xl font-bold mb-2 text-white">Antidiabetic</h3>
-                        <p class="text-gray-300 max-w-sm">Libero diam auctor tristique hendrerit eu in vel elit.</p>
-                        <a href="#" class="text-blue-400 font-semibold mt-4 block hover:text-blue-200">Explore Category &rarr;</a>
+                <div class="relative bg-white p-6 rounded-xl shadow-lg h-64 overflow-hidden 
+                            transition-transform duration-300 transform hover:shadow-xl hover:scale-[1.02]">
+                    <div class="relative z-10 w-1/2">
+                        <h3 class="text-2xl font-bold mb-2 text-gray-900">Antidiabetic</h3>
+                        <p class="text-gray-600">
+                           Helps support healthy blood sugar management and promotes better daily wellness.
+                        </p>
+                        <a href="#" class="text-blue-600 font-semibold mt-4 block hover:text-blue-800">
+                            Explore Category →
+                        </a>
                     </div>
-                    <div class="absolute top-4 right-4 space-y-2">
-                        <div class="w-3 h-3 bg-white rounded-full"></div>
-                        <div class="w-3 h-3 bg-white/50 rounded-full"></div>
+                    <div class="absolute top-0 right-0 w-1/2 h-full rounded-l-xl overflow-hidden">
+                        <img 
+                            src="/images/homepage/antidiabetic.jpg" 
+                            alt="Antidiabetic Medicine" 
+                            class="w-full h-full object-cover"
+                        >
                     </div>
                 </div>
-    
-                <div class="bg-white p-6 rounded-xl shadow-lg relative h-64 overflow-hidden">
-                    <div class="relative z-10">
+
+                <div class="relative bg-white p-6 rounded-xl shadow-lg h-64 overflow-hidden 
+                            transition-transform duration-300 transform hover:shadow-xl hover:scale-[1.02]">
+                    <div class="relative z-10 w-1/2">
                         <h3 class="text-2xl font-bold mb-2 text-gray-900">Antiseptic</h3>
-                        <p class="text-gray-600 max-w-sm">Libero diam auctor tristique hendrerit eu in vel elit.</p>
-                        <a href="#" class="text-blue-600 font-semibold mt-4 block hover:text-blue-800">Explore Category &rarr;</a>
+                        <p class="text-gray-600">
+                           Helps protect the skin by reducing harmful germs and supporting everyday hygiene.
+                        </p>
+                        <a href="#" class="text-blue-600 font-semibold mt-4 block hover:text-blue-800">
+                            Explore Category →
+                        </a>
                     </div>
-                    <div class="absolute top-0 right-0 w-1/2 h-full bg-gray-800 rounded-l-lg"></div>
+                    <div class="absolute top-0 right-0 w-1/2 h-full rounded-l-xl overflow-hidden">
+                        <img 
+                            src="/images/homepage/antiseptic.jpg" 
+                            alt="Antidiabetic Medicine" 
+                            class="w-full h-full object-cover"
+                        >
+                    </div>
                 </div>
-                
-                <div class="bg-white p-6 rounded-xl shadow-lg relative h-64 overflow-hidden">
-                    <div class="relative z-10">
+
+                <div class="relative bg-white p-6 rounded-xl shadow-lg h-64 overflow-hidden 
+                            transition-transform duration-300 transform hover:shadow-xl hover:scale-[1.02]">
+                    <div class="relative z-10 w-1/2">
                         <h3 class="text-2xl font-bold mb-2 text-gray-900">Antibiotic</h3>
-                        <p class="text-gray-600 max-w-sm">Libero diam auctor tristique hendrerit eu in vel elit.</p>
-                        <a href="#" class="text-blue-600 font-semibold mt-4 block hover:text-blue-800">Explore Category &rarr;</a>
+                        <p class="text-gray-600">
+                           Helps reduce bacterial growth and supports faster recovery.
+                        </p>
+                        <a href="#" class="text-blue-600 font-semibold mt-4 block hover:text-blue-800">
+                            Explore Category →
+                        </a>
                     </div>
-                    <div class="absolute top-0 right-0 w-1/2 h-full bg-gray-800 rounded-l-lg"></div>
+                    <div class="absolute top-0 right-0 w-1/2 h-full rounded-l-xl overflow-hidden">
+                        <img 
+                            src="/images/homepage/antibiotic.jpg" 
+                            alt="Antidiabetic Medicine" 
+                            class="w-full h-full object-cover"
+                        >
+                    </div>
                 </div>
                 
-                <div class="bg-white p-6 rounded-xl shadow-lg relative h-64 overflow-hidden">
-                    <div class="relative z-10">
+                <div class="relative bg-white p-6 rounded-xl shadow-lg h-64 overflow-hidden 
+                            transition-transform duration-300 transform hover:shadow-xl hover:scale-[1.02]">
+                    <div class="relative z-10 w-1/2">
                         <h3 class="text-2xl font-bold mb-2 text-gray-900">Antifungal</h3>
-                        <p class="text-gray-600 max-w-sm">Libero diam auctor tristique hendrerit eu in vel elit.</p>
-                        <a href="#" class="text-blue-600 font-semibold mt-4 block hover:text-blue-800">Explore Category &rarr;</a>
+                        <p class="text-gray-600">
+                           Designed to combat stubborn fungal issues, helping restore comfort and skin confidence.
+                        </p>
+                        <a href="#" class="text-blue-600 font-semibold mt-4 block hover:text-blue-800">
+                            Explore Category →
+                        </a>
                     </div>
-                    <div class="absolute top-0 right-0 w-1/2 h-full bg-gray-800 rounded-l-lg"></div>
+                    <div class="absolute top-0 right-0 w-1/2 h-full rounded-l-xl overflow-hidden">
+                        <img 
+                            src="/images/homepage/antifungal.jpg" 
+                            alt="Antidiabetic Medicine" 
+                            class="w-full h-full object-cover"
+                        >
+                    </div>
                 </div>
     
             </div>
