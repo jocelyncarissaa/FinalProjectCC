@@ -61,7 +61,7 @@
         </div>
         
         <div class="flex flex-col sm:flex-row justify-between items-center text-sm text-blue-100">
-            <p>&copy; {{ date('Y') }} PharmaPlus Store - Surabaya. All rights reserved. | Design by Group G</p>
+            <p>&copy; {{ date('Y') }} PharmaPlus Store - Surabaya. All rights reserved | Design by Group G</p>
             <div class="space-x-4 mt-3 sm:mt-0">
                 <a href="#" class="hover:text-white transition">Terms of Use</a>
                 <a href="#" class="hover:text-white transition">Privacy Policy</a>
