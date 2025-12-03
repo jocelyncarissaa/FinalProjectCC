@@ -101,11 +101,8 @@
                     Logistics and Service Schedule
                 </h2>
             </div>
-            
-            {{-- Menggunakan grid-cols-2 untuk dua card --}}
+
             <div class="grid grid-cols-1 md:grid-cols-2 gap-8">
-                
-                {{-- Column 1: Working Hours (Diberi efek hover) --}}
                 <div class="p-8 bg-white rounded-xl shadow-lg border border-gray-100 transition duration-300 transform hover:shadow-2xl hover:scale-[1.01]">
                     <h3 class="text-2xl font-bold text-gray-900 mb-4">Customer Service Hours</h3>
                     <ul class="text-gray-700 space-y-2">
@@ -117,8 +114,6 @@
                         Our administrative team is available during these hours.
                     </p>
                 </div>
-
-                {{-- Column 2: Delivery Schedule (Diberi efek hover) --}}
                 <div class="p-8 bg-white rounded-xl shadow-lg border border-gray-100 transition duration-300 transform hover:shadow-2xl hover:scale-[1.01]">
                     <h3 class="text-2xl font-bold text-gray-900 mb-4">Standard Shipping Cut-offs</h3>
                     <p class="text-gray-700 mb-2 font-semibold">
