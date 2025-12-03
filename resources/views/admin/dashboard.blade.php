@@ -65,21 +65,21 @@
             margin-bottom: 1.75rem;
         }
 
-        .brand-logo {
+        /* .brand-logo {
             width: 36px;
             height: 36px;
             border-radius: 12px;
-            background: #10B981;
+            background: #1053D4;
             display: flex;
             align-items: center;
             justify-content: center;
             font-weight: 800;
             font-size: 1.1rem;
-        }
+        } */
 
         .brand-text {
             font-weight: 700;
-            font-size: 1.05rem;
+            font-size: 1.5rem;
         }
 
         .sidebar-profile {
@@ -151,7 +151,7 @@
         }
 
         .menu-item.active {
-            background: #059669;
+            background: #1053D4;
             color: white;
         }
 
@@ -243,7 +243,7 @@
 
         .greeting {
             text-align: right;
-            font-size: 0.8rem;
+            font-size: 1rem;
         }
 
         .greeting-main {
@@ -252,7 +252,7 @@
 
         .greeting-sub {
             color: var(--text-muted);
-            font-size: 0.78rem;
+            font-size: 0.9rem;
         }
 
         .btn {
@@ -572,7 +572,7 @@
     <!-- SIDEBAR -->
     <aside class="sidebar">
         <div class="brand">
-            <div class="brand-logo">P</div>
+            {{-- <div class="brand-logo">P</div> --}}
             <div class="brand-text">PharmaPlus</div>
         </div>
 
@@ -627,7 +627,7 @@
             <a href="{{ route('admin.orders.index') }}" class="menu-item {{ request()->routeIs('admin.orders.*') ? 'active' : '' }}">
                 <span>Orders</span>
                 @php
-                    // Hitung order pending langsung di view (cara cepat)
+                    // Hitung order pending langsung di view 
                     $pendingCount = \App\Models\Order::where('status', 'pending')->count();
                 @endphp
 
@@ -736,7 +736,7 @@
                     <span>Revenue</span>
                     <span>Jan 2025 ▾</span>
                 </div>
-                <div class="stat-value">Rp 825.875.000</div>
+                <div class="stat-value">Rp 825.875.000 (MSH DUMMY)</div>
                 <div class="stat-footer">
                     <span class="panel-metric-label">This month</span>
                     <button class="btn" style="font-size:0.78rem;">View Detailed Report →</button>

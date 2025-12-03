@@ -570,11 +570,6 @@
                     Download Shipment Report
                 </button> --}}
             </div>
-
-            <div class="summary-footer-note">
-                Report bisa kamu ganti jadi invoice, DO, ataupun format lain sesuai kebutuhan
-                (export PDF/Excel dari controller).
-            </div>
         </div>
     </div>
 </div>

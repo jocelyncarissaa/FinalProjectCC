@@ -65,7 +65,7 @@
             margin-bottom: 1.75rem;
         }
 
-        .brand-logo {
+        /* .brand-logo {
             width: 36px;
             height: 36px;
             border-radius: 12px;
@@ -75,11 +75,11 @@
             justify-content: center;
             font-weight: 800;
             font-size: 1.1rem;
-        }
+        } */
 
         .brand-text {
             font-weight: 700;
-            font-size: 1.05rem;
+            font-size: 1.5rem;
         }
 
         .sidebar-profile {
@@ -151,7 +151,7 @@
         }
 
         .menu-item.active {
-            background: #059669;
+            background: #1053D4;
             color: white;
         }
 
@@ -573,7 +573,7 @@
     <!-- SIDEBAR -->
     <aside class="sidebar">
         <div class="brand">
-            <div class="brand-logo">P</div>
+            {{-- <div class="brand-logo">P</div> --}}
             <div class="brand-text">PharmaPlus</div>
         </div>
 

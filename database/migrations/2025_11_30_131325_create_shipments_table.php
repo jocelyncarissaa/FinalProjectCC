@@ -15,7 +15,7 @@ return new class extends Migration
         $table->id();
 
         // Pemilik pesanan
-        $table->foreignId('order_id')->constrained()->onDelete('cascade');
+        $table->foreignId('order_id')->constrained('orders')->onDelete('cascade');
 
         // Status seperti Shopee
         $table->enum('status', [
