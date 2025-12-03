@@ -30,7 +30,10 @@ Route::get('/', [UserController::class, 'index'])->name('home'); //buat client/u
 // == Login dan register =============
 // Route::get('/login', function () {return view('auth.login'); })->name('login');
 // Route::get('/register', function () {return view('auth.register');})->name('register');
-
+Route::get('/home', [UserController::class, 'index'])->name('home');
+Route::get('/about-us', function () {
+    return view('user.pages.about_us'); 
+})->name('about');
 Route::get('/login', [AuthController::class, 'showLogin'])->name('login');
 Route::post('/login', [AuthController::class, 'login'])->name('login.post');
 
