@@ -34,6 +34,9 @@ Route::get('/home', [UserController::class, 'index'])->name('home');
 Route::get('/about-us', function () {
     return view('user.pages.about_us'); 
 })->name('about');
+Route::get('/contact-us', function () {
+    return view('user.pages.contact'); 
+})->name('contact');
 Route::get('/login', [AuthController::class, 'showLogin'])->name('login');
 Route::post('/login', [AuthController::class, 'login'])->name('login.post');
 
