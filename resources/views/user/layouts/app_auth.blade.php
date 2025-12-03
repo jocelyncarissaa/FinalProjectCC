@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>PharmaPlus</title>
+    <title>PharmaPlus - Authenticated</title>
     
     <script src="https://cdn.tailwindcss.com"></script>
     
@@ -12,7 +12,6 @@
             theme: {
                 extend: {
                     colors: {
-                        // Warna Latar Belakang Biru Muda untuk Hero Section
                         'hero-bg': '#DEE9FF', 
                         'main-blue': '#4F46E5',
                     },
@@ -28,8 +27,7 @@
 </head>
 
 <body class="font-sans bg-white min-h-screen">
-    
-    @include('user.layouts.header')
+    @include('user.layouts.header_auth') 
 
     <main>
         @yield('content')
