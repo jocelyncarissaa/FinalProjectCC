@@ -23,20 +23,23 @@ use App\Http\Controllers\Admin\ShipmentController;
 //     return view('welcome');
 // });
 
-// Route untuk Halaman Beranda Customer
-// Menggunakan UserController@index untuk melayani /home
-Route::get('/', [UserController::class, 'index'])->name('home'); //buat client/user
+// == ROUTES PUBLIC / GUEST (BEFORE LOGIN) ==============================
 
-// == Login dan register =============
-// Route::get('/login', function () {return view('auth.login'); })->name('login');
-// Route::get('/register', function () {return view('auth.register');})->name('register');
-Route::get('/home', [UserController::class, 'index'])->name('home');
+// 1. LANDING PAGE (Guest View)
+Route::get('/', [UserController::class, 'index'])->name('welcome'); // Merender welcome.blade.php
+
+// 2. PUBLIC PAGES (About Us, Contact Us)
 Route::get('/about-us', function () {
+    // Merender user/pages/about_us.blade.php
     return view('user.pages.about_us'); 
 })->name('about');
+
 Route::get('/contact-us', function () {
+    // Merender user/pages/contact_us.blade.php
     return view('user.pages.contact'); 
 })->name('contact');
+
+// == LOGIN DAN REGISTER =============================
 Route::get('/login', [AuthController::class, 'showLogin'])->name('login');
 Route::post('/login', [AuthController::class, 'login'])->name('login.post');
 
@@ -45,10 +48,43 @@ Route::post('/register', [AuthController::class, 'register'])->name('register.po
 // Logout
 // Route::post('/logout', [AuthController::class, 'logout'])->name('logout');
 
-// == Dashboard Admin(butuh login)==================
+
+// == ROUTES PROTECTED (AFTER LOGIN) =================================
+
+// Semua route di bawah ini memerlukan pengguna yang sudah terautentikasi (auth)
 Route::middleware('auth')->group(function () {
 
-    // Admin dashboard
+    // 1. HOME PAGE AUTHENTICATED (Menggantikan /home untuk user yang sudah login)
+    // Ini akan merender user/pages/home_auth.blade.php
+    Route::get('/home', function () {
+        return view('user.home_auth'); 
+    })->name('home'); // PENTING: Menggunakan nama 'home' agar menjadi redirect setelah login
+
+    // 2. PRODUCTS INDEX (Ditambahkan ke header_auth)
+    Route::get('/products', function () {
+        // Asumsi ini merender user/products/product_list.blade.php
+        return view('user.products.product_list'); 
+    })->name('products');
+
+    // 3. PRODUCT DETAIL (Ditautkan dari card di home_auth)
+    Route::get('/product-detail', function () {
+        // Merender user/products/product_detail.blade.php
+        return view('user.products.product_detail');
+    })->name('product.detail');
+    
+    // 4. CART
+    Route::get('/cart', function () {
+        return view('user.cart.cart'); // Asumsi view cart
+    })->name('cart');
+
+    // 5. Profile page
+    Route::get('/profile', [AuthController::class, 'profile'])->name('profile');
+
+    // Logout
+    Route::post('/logout', [AuthController::class, 'logout'])->name('logout');
+
+
+    // == Dashboard Admin(butuh login)==================
     // Route::get('/admin/dashboard', function () {
     //     // nanti bisa diganti Controller kalau mau dynamic
     //     return view('admin.dashboard');
@@ -56,12 +92,6 @@ Route::middleware('auth')->group(function () {
 
     Route::get('/admin/dashboard', [DashboardController::class, 'index'])
     ->name('admin.dashboard');
-
-    // Profile page
-    Route::get('/profile', [AuthController::class, 'profile'])->name('profile');
-
-    // Logout
-    Route::post('/logout', [AuthController::class, 'logout'])->name('logout');
 
     // untuk download report
     Route::get('/admin/report/download/{type}', function ($type) {
@@ -90,10 +120,8 @@ Route::middleware('auth')->group(function () {
     Route::delete('/items/{item}', [ItemController::class, 'destroy'])->name('admin.items.destroy');
 
     // Shipment Report
-
    Route::get('/admin/shipments', [ShipmentController::class, 'index'])->name('admin.shipments.index');
    Route::get('/admin/shipments/create', [ShipmentController::class, 'create'])->name('admin.shipments.create');
    Route::post('/admin/shipments', [ShipmentController::class, 'store'])->name('admin.shipments.store');
    Route::get('/admin/shipments/{shipment}', [ShipmentController::class, 'show'])->name('admin.shipments.show');
 });
-
