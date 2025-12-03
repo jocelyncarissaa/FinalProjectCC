@@ -41,7 +41,6 @@
             overflow: hidden;
         }
 
-        /* LEFT HERO */
         .hero {
             flex: 1.1;
             padding: 2.5rem 2.75rem;
@@ -115,7 +114,6 @@
             max-width: 360px;
         }
 
-        /* RIGHT AUTH FORM */
         .auth {
             flex: 0.95;
             padding: 2.5rem 2.75rem;
@@ -133,8 +131,6 @@
         .auth-header {
             margin-bottom: 1.75rem;
         }
-
-
 
         .auth-title {
             font-size: 1.5rem;
@@ -203,7 +199,8 @@
             color: var(--primary);
             font-weight: 600;
         }
-
+        
+        /* MODIFIKASI: Hapus Shadow dan atur Hover untuk Primary Button */
         .btn-primary {
             width: 100%;
             border: none;
@@ -215,9 +212,15 @@
             font-weight: 600;
             font-size: 0.95rem;
             cursor: pointer;
-            box-shadow: 0 14px 30px rgba(16, 83, 212, 0.35);
+            box-shadow: none; /* Shadow dihilangkan */
+            transition: background 0.15s ease;
         }
 
+        .btn-primary:hover {
+            background: #0d44ad; /* Efek hover: warna biru lebih gelap */
+        }
+        
+        /* MODIFIKASI: Hapus Shadow dan atur Hover untuk Secondary Button */
         .btn-secondary {
             margin-top: 0.75rem;
             width: 100%;
@@ -228,6 +231,13 @@
             color: var(--primary);
             font-size: 0.9rem;
             cursor: pointer;
+            box-shadow: none; /* Pastikan tidak ada shadow */
+            transition: background 0.15s ease, border-color 0.15s ease;
+        }
+        
+        .btn-secondary:hover {
+            background: #e0e5f5; /* Efek hover: warna latar lebih muda */
+            border-color: rgba(16, 83, 212, 0.4); /* Border sedikit lebih menonjol */
         }
 
         .auth-footer {
@@ -243,7 +253,6 @@
             font-weight: 600;
         }
 
-        /* Mobile */
         @media (max-width: 640px) {
             .hero { display: none; }
             .page { margin: 0; border-radius: 0; }
@@ -255,8 +264,6 @@
 <body>
 
 <div class="page">
-
-    <!-- LEFT HERO -->
     <section class="hero">
         <div class="hero-inner">
             <div class="logo">
@@ -275,7 +282,6 @@
         </div>
     </section>
 
-    <!-- RIGHT SIGN UP FORM -->
     <section class="auth">
         <div class="auth-card">
 
@@ -297,7 +303,6 @@
         </div>
     @endif
 
-{{-- FORM --}}
 <form method="POST" action="{{ route('register.post') }}">
     @csrf
 

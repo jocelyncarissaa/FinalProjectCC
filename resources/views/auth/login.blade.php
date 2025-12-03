@@ -42,7 +42,6 @@
             overflow: hidden;
         }
 
-        /* Left hero side */
         .hero {
             flex: 1.1;
             padding: 2.5rem 2.75rem;
@@ -191,7 +190,6 @@
             background: var(--primary);
         }
 
-        /* Right login card */
         .auth {
             flex: 0.95;
             padding: 2.5rem 2.75rem;
@@ -209,8 +207,6 @@
         .auth-header {
             margin-bottom: 1.75rem;
         }
-
-
 
         .auth-title {
             font-size: 1.5rem;
@@ -326,17 +322,18 @@
             font-weight: 600;
             font-size: 0.95rem;
             cursor: pointer;
-            box-shadow: 0 14px 30px rgba(16, 83, 212, 0.35);
+            box-shadow: none;
             transition:
-                transform 0.12s ease,
-                box-shadow 0.12s ease,
-                filter 0.12s ease;
+                transform 0.15s ease,
+                box-shadow 0.15s ease,
+                background 0.15s ease; 
         }
 
         .btn-primary:hover {
-            filter: brightness(1.05);
-            transform: translateY(-1px);
-            box-shadow: 0 18px 40px rgba(16, 83, 212, 0.4);
+            background: #0d44ad; 
+            filter: none;
+            transform: none;
+            box-shadow: none;
         }
 
         .btn-secondary {
@@ -369,9 +366,6 @@
             text-decoration: underline;
         }
 
-
-
-        /* Responsive */
         @media (max-width: 900px) {
             .page {
                 flex-direction: column;
@@ -405,7 +399,7 @@
             }
 
             .hero {
-                display: none; /* kalau mau tetap tampil di mobile, hapus baris ini */
+                display: none; 
             }
 
             .auth {
@@ -422,8 +416,6 @@
 <body>
 <div class="page">
 
-
-    <!-- LEFT HERO -->
     <section class="hero">
         <div class="hero-inner">
             <div class="logo">
@@ -455,7 +447,7 @@
         </div>
 
         <div class="hero-footer">
-            <div>💊 24/7 Online Pharmacy Support</div>
+            <div>24/7 Online Pharmacy Support</div>
             <div class="hero-pills">
                 <div class="pill">
                     <span class="pill-dot"></span>
@@ -469,7 +461,6 @@
         </div>
     </section>
 
-    <!-- RIGHT LOGIN -->
     <section class="auth">
         <div class="auth-card">
             <div class="auth-header">
@@ -492,14 +483,8 @@
         </div>
     @endif
 
-
-
-
-    <!-- FORM -->
     <form method="POST" action="{{ route('login.post') }}">
             @csrf
-
-            <!-- EMAIL -->
             <div class="field">
                 <label for="email">Email address</label>
                 <div class="input-wrapper">
@@ -518,7 +503,6 @@
                 </div>
             </div>
 
-            <!-- PASSWORD -->
             <div class="field">
                 <div class="field-row">
                     <label for="password">Password</label>
@@ -546,7 +530,6 @@
                 </div>
             </div>
 
-            <!-- REMEMBER ME -->
             <div class="field-row">
                 <label class="remember">
                     <input type="checkbox" name="remember" />

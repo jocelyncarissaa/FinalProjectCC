@@ -49,7 +49,8 @@
         <section class="mb-16 pt-8"> 
             <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
                 
-                <div class="bg-hero-bg p-8 rounded-xl shadow-lg flex items-center justify-between transition duration-300 transform group hover:shadow-2xl hover:scale-[1.01]">
+                {{-- Card 1: Big Sale --}}
+                <a href="{{ url('/login') }}" class="bg-hero-bg p-8 rounded-xl shadow-lg flex items-center justify-between transition duration-300 transform group hover:shadow-2xl hover:scale-[1.01]">
                     <div>
                         <span class="text-pink-600 font-bold mb-2 block">Big Sale</span>
                         <h2 class="text-3xl font-extrabold text-gray-900 mb-2">Get an Extra <br><span class="text-indigo-600">50% Off</span></h2>
@@ -58,13 +59,14 @@
                     <div class="w-2/5 h-40 rounded-lg relative overflow-hidden bg-gray-800">
                         <img src="{{ asset('images/homepage/healthcarecompanylogo.jpg') }}" alt="Healthcare Company Logo" class="absolute inset-0 w-full h-full object-contain p-4 filter grayscale">
                     </div>
-                </div>
+                </a>
     
+                {{-- Card 2: Holiday Savings --}}
                 <div class="bg-blue-700 p-8 rounded-xl shadow-lg flex items-center justify-between transition duration-300 transform group hover:shadow-2xl hover:scale-[1.01]">
                     <div>
                         <span class="text-white font-semibold mb-2 block">Holiday Savings</span>
                         <h2 class="text-6xl font-extrabold text-white mb-4">Up to 40%</h2>
-                        <button class="bg-white text-blue-700 font-bold py-2 px-4 rounded-full hover:bg-gray-100 transition duration-200 text-sm mb-1">Shop Now</button>
+                        <a href="{{ url('/login') }}" class="bg-white text-blue-700 font-bold py-2 px-4 rounded-full hover:bg-gray-100 transition duration-200 text-sm mb-1 inline-block">Shop Now</a>
                     </div>
                     <div class="w-2/5 h-40 rounded-lg relative overflow-hidden bg-gray-900 opacity-90">
                         <img src="{{ asset('images/homepage/christmassale.jpg') }}" alt="Christmas Sale Banner" class="absolute inset-0 w-full h-full object-cover">
@@ -80,13 +82,13 @@
                     <h2 class="text-3xl font-extrabold text-gray-900">Top Picks for Your Wellness</h2>
                     <p class="text-gray-500 max-w-lg mt-2">Curated selection of essential health products recommended by our experts.</p>
                 </div>
-                <a href="#" class="text-blue-600 font-semibold hover:text-blue-800 transition duration-150 hidden sm:block">All Products &rarr;</a>
+                <a href="{{ url('/login') }}" class="text-blue-600 font-semibold hover:text-blue-800 transition duration-150 hidden sm:block">All Products &rarr;</a>
             </div>
     
             <div class="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6">
                 
                 {{-- Card 1: Clarinazole --}}
-                <div class="bg-blue-50 p-4 rounded-xl shadow-lg transition duration-300 transform hover:shadow-xl hover:scale-[1.03] cursor-pointer">
+                <a href="{{ url('/login') }}" class="bg-blue-50 p-4 rounded-xl shadow-lg transition duration-300 transform hover:shadow-xl hover:scale-[1.03] cursor-pointer">
                     <div class="bg-hero-bg h-48 rounded-lg mb-4 relative flex items-center justify-center overflow-hidden">
                         <img src="{{ asset('images/homepage/Clarinazole.jpg') }}" alt="Acetaminophen Pills" class="w-full h-full object-contain p-4">
                     </div>
@@ -96,10 +98,10 @@
                         <span class="text-gray-400 line-through mr-2">$16.00</span>
                         <span class="text-red-600 font-bold">$12.50</span>
                     </div>
-                </div>
+                </a>
     
                 {{-- Card 2: Cefcillin --}}
-                <div class="bg-blue-50 p-4 rounded-xl shadow-lg transition duration-300 transform hover:shadow-xl hover:scale-[1.03] cursor-pointer">
+                <a href="{{ url('/login') }}" class="bg-blue-50 p-4 rounded-xl shadow-lg transition duration-300 transform hover:shadow-xl hover:scale-[1.03] cursor-pointer">
                     <div class="bg-hero-bg h-48 rounded-lg mb-4 relative flex items-center justify-center overflow-hidden">
                         <img src="{{ asset('images/homepage/Cefcillin.jpg') }}" alt="Throat Lozenges Syrup" class="w-full h-full object-contain p-4">
                     </div>
@@ -109,10 +111,10 @@
                         <span class="text-gray-400 line-through mr-2">$16.00</span>
                         <span class="text-red-600 font-bold">$12.00</span>
                     </div>
-                </div>
+                </a>
     
                 {{-- Card 3: Ibupronazole --}}
-                <div class="bg-blue-50 p-4 rounded-xl shadow-lg transition duration-300 transform hover:shadow-xl hover:scale-[1.03] cursor-pointer">
+                <a href="{{ url('/login') }}" class="bg-blue-50 p-4 rounded-xl shadow-lg transition duration-300 transform hover:shadow-xl hover:scale-[1.03] cursor-pointer">
                     <div class="bg-hero-bg h-48 rounded-lg mb-4 relative flex items-center justify-center overflow-hidden">
                         <img src="{{ asset('images/homepage/Ibupronazole.jpg') }}" alt="Multivitamin B6+" class="w-full h-full object-contain p-4">
                     </div>
@@ -122,10 +124,10 @@
                         <span class="text-gray-400 line-through mr-2">$18.99</span>
                         <span class="text-red-600 font-bold">$12.00</span>
                     </div>
-                </div>
+                </a>
                 
                 {{-- Card 4: Metoprofen --}}
-                <div class="bg-blue-50 p-4 rounded-xl shadow-lg transition duration-300 transform hover:shadow-xl hover:scale-[1.03] cursor-pointer">
+                <a href="{{ url('/login') }}" class="bg-blue-50 p-4 rounded-xl shadow-lg transition duration-300 transform hover:shadow-xl hover:scale-[1.03] cursor-pointer">
                     <div class="bg-hero-bg h-48 rounded-lg mb-4 relative flex items-center justify-center overflow-hidden">
                         <img src="{{ asset('images/homepage/Metoprofen.jpg') }}" alt="Dental Floss" class="w-full h-full object-contain p-4">
                     </div>
@@ -134,28 +136,30 @@
                     <div class="mt-2">
                         <span class="text-red-600 font-bold">$5.50</span>
                     </div>
-                </div>
+                </a>
     
             </div>
             
             <div class="flex justify-end mt-4">
-                <a href="#" class="text-blue-600 font-semibold hover:text-blue-800 transition duration-150 sm:hidden">All Products &rarr;</a>
+                <a href="{{ url('/login') }}" class="text-blue-600 font-semibold hover:text-blue-800 transition duration-150 sm:hidden">All Products &rarr;</a>
             </div>
         </section>
     
         <section class="mb-16">
             <h2 class="sr-only">Product Categories</h2>
             <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
-                <div class="relative bg-white p-6 rounded-xl shadow-lg h-64 overflow-hidden 
+                
+                {{-- Category 1: Antidiabetic --}}
+                <a href="{{ url('/login') }}" class="relative bg-white p-6 rounded-xl shadow-lg h-64 overflow-hidden 
                             transition-transform duration-300 transform hover:shadow-xl hover:scale-[1.02]">
                     <div class="relative z-10 w-1/2">
                         <h3 class="text-2xl font-bold mb-2 text-gray-900">Antidiabetic</h3>
                         <p class="text-gray-600">
                            Helps support healthy blood sugar management and promotes better daily wellness.
                         </p>
-                        <a href="#" class="text-blue-600 font-semibold mt-4 block hover:text-blue-800">
+                        <span class="text-blue-600 font-semibold mt-4 block hover:text-blue-800">
                             Explore Category →
-                        </a>
+                        </span>
                     </div>
                     <div class="absolute top-0 right-0 w-1/2 h-full rounded-l-xl overflow-hidden">
                         <img 
@@ -164,18 +168,19 @@
                             class="w-full h-full object-cover"
                         >
                     </div>
-                </div>
+                </a>
 
-                <div class="relative bg-white p-6 rounded-xl shadow-lg h-64 overflow-hidden 
+                {{-- Category 2: Antiseptic --}}
+                <a href="{{ url('/login') }}" class="relative bg-white p-6 rounded-xl shadow-lg h-64 overflow-hidden 
                             transition-transform duration-300 transform hover:shadow-xl hover:scale-[1.02]">
                     <div class="relative z-10 w-1/2">
                         <h3 class="text-2xl font-bold mb-2 text-gray-900">Antiseptic</h3>
                         <p class="text-gray-600">
                            Helps protect the skin by reducing harmful germs and supporting everyday hygiene.
                         </p>
-                        <a href="#" class="text-blue-600 font-semibold mt-4 block hover:text-blue-800">
+                        <span class="text-blue-600 font-semibold mt-4 block hover:text-blue-800">
                             Explore Category →
-                        </a>
+                        </span>
                     </div>
                     <div class="absolute top-0 right-0 w-1/2 h-full rounded-l-xl overflow-hidden">
                         <img 
@@ -184,18 +189,19 @@
                             class="w-full h-full object-cover"
                         >
                     </div>
-                </div>
+                </a>
 
-                <div class="relative bg-white p-6 rounded-xl shadow-lg h-64 overflow-hidden 
+                {{-- Category 3: Antibiotic --}}
+                <a href="{{ url('/login') }}" class="relative bg-white p-6 rounded-xl shadow-lg h-64 overflow-hidden 
                             transition-transform duration-300 transform hover:shadow-xl hover:scale-[1.02]">
                     <div class="relative z-10 w-1/2">
                         <h3 class="text-2xl font-bold mb-2 text-gray-900">Antibiotic</h3>
                         <p class="text-gray-600">
                            Helps reduce bacterial growth and supports faster recovery.
                         </p>
-                        <a href="#" class="text-blue-600 font-semibold mt-4 block hover:text-blue-800">
+                        <span class="text-blue-600 font-semibold mt-4 block hover:text-blue-800">
                             Explore Category →
-                        </a>
+                        </span>
                     </div>
                     <div class="absolute top-0 right-0 w-1/2 h-full rounded-l-xl overflow-hidden">
                         <img 
@@ -204,18 +210,19 @@
                             class="w-full h-full object-cover"
                         >
                     </div>
-                </div>
+                </a>
                 
-                <div class="relative bg-white p-6 rounded-xl shadow-lg h-64 overflow-hidden 
+                {{-- Category 4: Antifungal --}}
+                <a href="{{ url('/login') }}" class="relative bg-white p-6 rounded-xl shadow-lg h-64 overflow-hidden 
                             transition-transform duration-300 transform hover:shadow-xl hover:scale-[1.02]">
                     <div class="relative z-10 w-1/2">
                         <h3 class="text-2xl font-bold mb-2 text-gray-900">Antifungal</h3>
                         <p class="text-gray-600">
                            Designed to combat stubborn fungal issues, helping restore comfort and skin confidence.
                         </p>
-                        <a href="#" class="text-blue-600 font-semibold mt-4 block hover:text-blue-800">
+                        <span class="text-blue-600 font-semibold mt-4 block hover:text-blue-800">
                             Explore Category →
-                        </a>
+                        </span>
                     </div>
                     <div class="absolute top-0 right-0 w-1/2 h-full rounded-l-xl overflow-hidden">
                         <img 
@@ -224,7 +231,7 @@
                             class="w-full h-full object-cover"
                         >
                     </div>
-                </div>
+                </a>
             </div>
         </section>
     
@@ -240,7 +247,7 @@
             <div class="relative overflow-hidden">
                 <div id="testimonial-slider" class="flex transition-transform duration-500 ease-in-out"> 
                     
-                    {{-- Testimonial 1 (Content Revised, Padding Adjusted) --}}
+                    {{-- Testimonial 1 --}}
                     <div class="min-w-full px-4 sm:px-6 lg:px-8"> 
                         <div class="cursor-pointer max-w-3xl mx-auto"> 
                             <div class="bg-white px-6 py-3 md:px-10 md:py-6 rounded-2xl shadow-xl border border-gray-100 relative">
@@ -275,7 +282,7 @@
                         </div>
                     </div>
                     
-                    {{-- Testimonial 2 (Content Revised) --}}
+                    {{-- Testimonial 2 --}}
                     <div class="min-w-full px-4 sm:px-6 lg:px-8">
                         <div class="cursor-pointer max-w-3xl mx-auto">
                             <div class="bg-white px-6 py-3 md:px-10 md:py-6 rounded-2xl shadow-xl border border-gray-100 relative">
@@ -310,7 +317,7 @@
                         </div>
                     </div>
 
-                    {{-- Testimonial 3 (Content Revised) --}}
+                    {{-- Testimonial 3 --}}
                     <div class="min-w-full px-4 sm:px-6 lg:px-8">
                         <div class="cursor-pointer max-w-3xl mx-auto">
                             <div class="bg-white px-6 py-3 md:px-10 md:py-6 rounded-2xl shadow-xl border border-gray-100 relative">
@@ -345,7 +352,7 @@
                         </div>
                     </div>
 
-                    {{-- Testimonial 4 (Content Revised) --}}
+                    {{-- Testimonial 4 --}}
                     <div class="min-w-full px-4 sm:px-6 lg:px-8">
                         <div class="cursor-pointer max-w-3xl mx-auto">
                             <div class="bg-white px-6 py-3 md:px-10 md:py-6 rounded-2xl shadow-xl border border-gray-100 relative">
@@ -380,7 +387,7 @@
                         </div>
                     </div>
 
-                    {{-- Testimonial 5 (Content Revised) --}}
+                    {{-- Testimonial 5 --}}
                     <div class="min-w-full px-4 sm:px-6 lg:px-8">
                         <div class="cursor-pointer max-w-3xl mx-auto">
                             <div class="bg-white px-6 py-3 md:px-10 md:py-6 rounded-2xl shadow-xl border border-gray-100 relative">
