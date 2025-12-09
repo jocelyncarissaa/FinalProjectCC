@@ -28,14 +28,19 @@
 </head>
 
 <body class="font-sans bg-white min-h-screen">
-    
-    @include('user.layouts.header')
+    {{-- LOGIKA UTAMA UNTUK MEMILIH HEADER BERDASARKAN STATUS LOGIN --}}
+    @auth
+        {{-- Jika user login, tampilkan header authenticated --}}
+        @include('user.layouts.header_auth') 
+    @else
+        {{-- Jika user belum login, tampilkan header public/guest --}}
+        @include('user.layouts.header') 
+    @endauth
 
     <main>
         @yield('content')
     </main>
 
     @include('user.layouts.footer')
-
 </body>
 </html>
