@@ -8,7 +8,7 @@
             </div>
 
             <div class="hidden md:flex items-center space-x-8 text-gray-800">
-                <a href="{{ url('/home') }}" class="font-medium hover:text-[#1053D4] transition">Home</a>
+                <a href="{{ url('/') }}" class="font-medium hover:text-[#1053D4] transition">Home</a>
                 <a href="{{ url('/about-us') }}" class="font-medium hover:text-[#1053D4] transition">About Us</a>
                 <a href="{{ url('/contact-us') }}" class="font-medium hover:text-[#1053D4] transition">Contact Us</a>
             </div>
