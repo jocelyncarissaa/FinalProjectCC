@@ -2,11 +2,10 @@
 
 @section('content')
 
-    {{-- WRAPPER UNTUK BACKGROUND BIRU MUDA (Menggunakan bg-blue-50/70 agar konsisten dengan theme terang) --}}
-    <div class="bg-blue-50/70"> 
+    <div class="bg-hero-bg"> 
         <div class="container mx-auto px-4 sm:px-6 lg:px-8 py-10 lg:py-16">
             
-            {{-- Header Halaman --}}
+            {{-- Header --}}
             <div class="text-center mb-10">
                 <h1 class="text-4xl font-extrabold text-gray-900 mb-2">Our Healthcare Catalog</h1>
                 <p class="text-xl text-gray-600">Find the essential wellness products you need.</p>
@@ -16,7 +15,6 @@
             <div class="mb-10 p-6 bg-white rounded-xl shadow-lg border border-gray-100">
                 <form action="{{ route('products') }}" method="GET" class="flex flex-col md:flex-row gap-4">
                     
-                    {{-- Search Input --}}
                     <input 
                         type="text" 
                         name="search" 
@@ -25,10 +23,8 @@
                         class="flex-grow p-3 border border-gray-300 rounded-lg focus:border-[#1364FF] focus:ring-1 focus:ring-[#1364FF]"
                     >
                     
-                    {{-- Category Dropdown (Diperbarui dengan semua kategori) --}}
                     <select name="category" class="p-3 border border-gray-300 rounded-lg focus:border-[#1364FF] focus:ring-1 focus:ring-[#1364FF] w-full md:w-auto">
                         <option value="">All Categories</option>
-                        {{-- Daftar Kategori --}}
                         @php
                             $categories = [
                                 'Analgesic', 'Antibiotic', 'Antidepressant', 
@@ -43,7 +39,6 @@
                         @endforeach
                     </select>
 
-                    {{-- Submit Button (Menggunakan warna biru primer Anda) --}}
                     <button type="submit" class="bg-[#1364FF] hover:bg-[#1053D4] text-white font-bold py-3 px-6 rounded-lg transition-all duration-300 w-full md:w-auto">
                         Search
                     </button>
@@ -55,11 +50,25 @@
                 
                 @forelse ($items as $item)
                     {{-- Product Card --}}
-                    <a href="{{ route('product.detail', $item->id) }}" class="block">
-                        <div class="bg-white rounded-xl shadow-lg border border-gray-100 overflow-hidden transform hover:shadow-xl transition duration-300 hover:scale-[1.02] h-full flex flex-col">
+                    <div class="bg-gray-50 rounded-xl shadow-lg border border-gray-100 overflow-hidden transform hover:shadow-xl transition duration-300 hover:scale-[1.02] h-full flex flex-col relative group">
+                        
+                        {{-- Button Add to Cart --}}
+                        <button 
+                            data-id="{{ $item->id }}"
+                            data-name="{{ $item->name }}"
+                            data-category="{{ $item->category }}"
+                            data-price="{{ $item->discount_price ?? $item->price }}"
+                            class="open-cart-modal absolute top-3 right-3 w-10 h-10 bg-pink-600 text-white rounded-full flex items-center justify-center shadow-lg hover:bg-pink-700 transition z-10"
+                            title="Add to Cart"
+                        >
+                            <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 3h2l.4 2M7 13h10l4-8H5.4M7 13L5.4 5M7 13l-2.293 2.293c-.63.63-.184 1.707.707 1.707H17m0 0a2 2 0 100 4 2 2 0 000-4zm-8 2a2 2 0 11-4 0 2 2 0 014 0z"></path></svg>
+                        </button>
+
+                        {{-- Isi Card --}}
+                        <a href="{{ route('product.detail', $item->id) }}" class="flex flex-col flex-grow">
                             
                             {{-- Image Area --}}
-                            <div class="p-4 bg-gray-50 flex justify-center items-center h-48">
+                            <div class="p-4 bg-gray-100 flex justify-center items-center h-48"> 
                                 <img 
                                     src="{{ asset($item->image_path) }}" 
                                     alt="{{ $item->name }}" 
@@ -78,19 +87,14 @@
                                 
                                 <div class="mt-auto pt-2 border-t border-gray-100">
                                     @php
-                                        // Ambil harga (contoh: 16000) dan diskon (contoh: 12500)
                                         $finalPrice = $item->discount_price ?? $item->price;
                                         $originalPrice = $item->price;
                                         $isSale = $item->discount_price && $item->discount_price < $item->price;
-                                        
-                                        // Format Rupiah (0 desimal, koma sebagai pemisah desimal, titik sebagai pemisah ribuan)
-                                        // Catatan: Jika Anda ingin menggunakan desimal 2 angka: number_format(..., 2, ',', '.')
                                         $formatPrice = fn($p) => 'Rp' . number_format($p, 0, ',', '.');
                                     @endphp
 
                                     {{-- Harga Asli (jika ada diskon) --}}
                                     @if ($isSale)
-                                        {{-- Harga Asli Abu-abu (line-through) --}}
                                         <span class="text-sm text-gray-400 line-through mr-2">{{ $formatPrice($originalPrice) }}</span>
                                     @endif
                                     
@@ -100,8 +104,8 @@
                                     </span>
                                 </div>
                             </div>
-                        </div>
-                    </a>
+                        </a> {{-- Tutup Link Card --}}
+                    </div>
                 @empty
                     {{-- Jika tidak ada produk yang ditemukan --}}
                     <div class="md:col-span-4 text-center p-12 bg-yellow-50 rounded-xl">
@@ -118,5 +122,121 @@
             
         </div>
     </div>
+
+    {{-- =============================================== --}}
+    {{-- MODAL ADD TO CART --}}
+    {{-- =============================================== --}}
+    <div id="cart-modal" class="fixed inset-0 bg-gray-900 bg-opacity-75 z-50 flex items-center justify-center hidden">
+        <div class="bg-white rounded-xl shadow-2xl w-full max-w-lg p-6 md:p-8 transform transition-all">
+            
+            <h3 class="text-2xl font-bold text-gray-900 mb-4 border-b pb-2">Add Item to Cart</h3>
+            
+            <form id="add-to-cart-form" method="POST" action="{{ route('cart') }}"> 
+                @csrf
+                <input type="hidden" name="item_id" id="modal-item-id">
+                
+                {{-- Detail Produk di Modal --}}
+                <div class="mb-5 space-y-2">
+                    <p class="text-sm text-gray-500">Product Name:</p>
+                    <h4 id="modal-item-name" class="text-xl font-extrabold text-[#1364FF]"></h4>
+                    <p class="text-md text-gray-600">Category: <span id="modal-item-category" class="font-semibold text-pink-600"></span></p>
+                    <p class="text-md text-gray-600">Price: <span id="modal-item-price" class="font-bold text-gray-900"></span></p>
+                </div>
+
+                {{-- Input Kuantitas --}}
+                <div class="mb-5">
+                    <label for="quantity" class="block text-sm font-medium text-gray-700 mb-2">Quantity</label>
+                    <div class="flex items-center space-x-3">
+                        <button type="button" id="decrement-qty" class="w-10 h-10 bg-gray-200 rounded-lg hover:bg-gray-300 font-bold text-xl transition">-</button>
+                        <input type="number" name="quantity" id="modal-quantity" value="1" min="1" class="w-20 p-2 border border-gray-300 rounded-lg text-center focus:border-[#1364FF] focus:ring-1 focus:ring-[#1364FF]">
+                        <button type="button" id="increment-qty" class="w-10 h-10 bg-gray-200 rounded-lg hover:bg-gray-300 font-bold text-xl transition">+</button>
+                    </div>
+                </div>
+
+                {{-- Catatan Khusus --}}
+                <div class="mb-6">
+                    <label for="notes" class="block text-sm font-medium text-gray-700 mb-2">Special Notes (Optional)</label>
+                    <textarea name="notes" id="modal-notes" rows="3" class="w-full p-3 border border-gray-300 rounded-lg focus:border-[#1364FF] focus:ring-1 focus:ring-[#1364FF]" placeholder="e.g., Packaging instructions, special delivery time..."></textarea>
+                </div>
+
+                {{-- Tombol Aksi --}}
+                <div class="flex justify-end space-x-3">
+                    <button type="button" id="cancel-cart-modal" class="py-2 px-4 border border-gray-300 rounded-lg text-gray-700 hover:bg-gray-100 transition">
+                        Cancel
+                    </button>
+                    <button type="submit" class="bg-pink-600 hover:bg-pink-700 text-white font-bold py-2 px-4 rounded-lg shadow-md transition">
+                        Add to Cart
+                    </button>
+                </div>
+            </form>
+        </div>
+    </div>
+
+    {{-- =============================================== --}}
+    {{-- MODAL --}}
+    {{-- =============================================== --}}
+    <script>
+        document.addEventListener('DOMContentLoaded', function () {
+            const modal = document.getElementById('cart-modal');
+            const openButtons = document.querySelectorAll('.open-cart-modal');
+            const cancelButton = document.getElementById('cancel-cart-modal');
+            const form = document.getElementById('add-to-cart-form');
+            const qtyInput = document.getElementById('modal-quantity');
+            const incrementBtn = document.getElementById('increment-qty');
+            const decrementBtn = document.getElementById('decrement-qty');
+
+            openButtons.forEach(button => {
+                button.addEventListener('click', function(e) {
+                    e.preventDefault();
+                    e.stopPropagation();
+                    
+                    const id = this.getAttribute('data-id');
+                    const name = this.getAttribute('data-name');
+                    const category = this.getAttribute('data-category');
+                    const price = this.getAttribute('data-price');
+
+                    document.getElementById('modal-item-id').value = id;
+                    document.getElementById('modal-item-name').textContent = name;
+                    document.getElementById('modal-item-category').textContent = category;
+
+                    const formattedPrice = 'Rp' + parseFloat(price).toLocaleString('id-ID', { minimumFractionDigits: 0 });
+                    document.getElementById('modal-item-price').textContent = formattedPrice;
+
+                    qtyInput.value = 1;
+                    document.getElementById('modal-notes').value = '';
+
+                    modal.classList.remove('hidden');
+                });
+            });
+
+            const closeModal = () => {
+                modal.classList.add('hidden');
+            };
+
+            cancelButton.addEventListener('click', closeModal);
+            modal.addEventListener('click', (e) => {
+                if (e.target === modal) {
+                    closeModal(); 
+                }
+            });
+
+            incrementBtn.addEventListener('click', () => {
+                qtyInput.value = parseInt(qtyInput.value) + 1;
+            });
+
+            decrementBtn.addEventListener('click', () => {
+                let currentVal = parseInt(qtyInput.value);
+                if (currentVal > 1) {
+                    qtyInput.value = currentVal - 1;
+                }
+            });
+
+            qtyInput.addEventListener('change', () => {
+                if (parseInt(qtyInput.value) < 1 || isNaN(parseInt(qtyInput.value))) {
+                    qtyInput.value = 1;
+                }
+            });
+        });
+    </script>
 
 @endsection
