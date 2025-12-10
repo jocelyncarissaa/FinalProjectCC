@@ -734,9 +734,9 @@
             <div class="stat-card card-yellow">
                 <div class="stat-header">
                     <span>Revenue</span>
-                    <span>Jan 2025 ▾</span>
+                    <span>{{ \Carbon\Carbon::now()->format('M Y') }} ▾</span> 
                 </div>
-                <div class="stat-value">Rp 825.875.000 (MSH DUMMY)</div>
+                <div class="stat-value">Rp {{ number_format($revenue, 0, ',', '.') }}</div>
                 <div class="stat-footer">
                     <span class="panel-metric-label">This month</span>
                     <button class="btn" style="font-size:0.78rem;">View Detailed Report →</button>

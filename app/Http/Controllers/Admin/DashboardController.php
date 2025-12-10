@@ -6,6 +6,7 @@ use App\Http\Controllers\Controller;
 use App\Models\Item;
 use App\Models\Shipment;      // ⬅️ tambahkan ini
 use Carbon\Carbon;           // ⬅️ dan ini
+use App\Models\Order;
 
 class DashboardController extends Controller
 {
@@ -52,6 +53,16 @@ class DashboardController extends Controller
         // shipment yang dibuat hari ini
         $todayShipments = Shipment::whereDate('created_at', Carbon::today())->count();
 
+        // REVENUE CALCULATION
+        // =====================
+        
+        // Calculate revenue for the current month
+        // We filter by statuses that indicate money is received (paid, shipped, completed)
+        $revenue = Order::whereIn('status', ['paid', 'shipped', 'completed']) //
+            ->whereMonth('created_at', Carbon::now()->month)
+            ->whereYear('created_at', Carbon::now()->year)
+            ->sum('total_amount'); // Using 'total_price' from Order model fillable
+
         // kirim ke view
         return view('admin.dashboard', compact(
             'totalMedicines',
@@ -62,7 +73,10 @@ class DashboardController extends Controller
             'pendingShipments',
             'deliveredShipments',
             'completedShipments',
-            'todayShipments'
+            'todayShipments',
+            'revenue'
         ));
+
+        
     }
 }

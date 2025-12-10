@@ -86,6 +86,8 @@ Route::middleware('auth')->group(function () {
 
         // Orders
         Route::get('/orders', [OrderController::class, 'index'])->name('admin.orders.index');
+        Route::get('/orders/{order}', [OrderController::class, 'show'])->name('admin.orders.show');
+        Route::post('/orders/{order}', [OrderController::class, 'updateStatus'])->name('admin.orders.update_status');
         
         // Items (CRUD)
         // Perhatian: Rute Admin Item harus berbeda dengan rute client Item
