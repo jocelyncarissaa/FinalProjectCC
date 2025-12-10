@@ -70,9 +70,14 @@ Route::middleware('auth')->group(function () {
         return view('user.cart.cart'); 
     })->name('cart');
 
+    // Route Profile
     Route::get('/profile', [AuthController::class, 'profile'])->name('profile');
+    
+    // Route MyOrders di Profile
+    Route::get('/profile/order/{id}', [UserController::class, 'showOrderDetail'])->name('profile.order.detail');
 
-
+    // Route Proses Update Profile
+    Route::put('/profile/update', [AuthController::class, 'updateProfile'])->name('profile.update');
     // =========================================================================
     // == KELOMPOK 3: ROUTES ADMIN
     // =========================================================================

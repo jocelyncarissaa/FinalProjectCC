@@ -6,6 +6,7 @@ use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
+use App\Models\Order;
 
 class AuthController extends Controller
 {
@@ -108,10 +109,35 @@ class AuthController extends Controller
 // buat profile
     public function profile()
     {
-        return view('user.profile', [
-            'user' => Auth::user(),
-        ]);
+        // Mendapatkan user yang sedang login
+        $user = Auth::user();
+
+        // Mengambil riwayat pesanan (orders) milik user yang login
+        $orders = Order::where('user_id', $user->id)->latest()->get();
+
+        return view('user.profile.profile', compact('user', 'orders'));
     }
 
+    public function updateProfile(Request $request)
+    {
+        // 1. Validasi Input
+        $request->validate([
+            'name' => 'required|string|max:255',
+            'phone' => 'nullable|string|max:15', // Sesuaikan panjang max
+            'address' => 'nullable|string|max:500',
+        ]);
+
+        // 2. Ambil User & Update
+        $user = Auth::user();
+        $user->update([
+            'name' => $request->name,
+            'phone' => $request->phone,
+            'address' => $request->address,
+            // Email sengaja tidak di-update di sini untuk keamanan (biasanya butuh verifikasi ulang)
+        ]);
+
+        // 3. Redirect kembali dengan pesan sukses
+        return back()->with('success', 'Profile updated successfully!');
+    }
 }
 
