@@ -81,8 +81,12 @@
                             </span>
                         </div>
                     </div>
-                    <a href="{{ route('checkout') }}" class="group block w-full bg-[#1364FF] hover:bg-[#1053D4] text-white text-center py-4 rounded-2xl font-bold text-lg shadow-xl shadow-blue-100 transition-all duration-300 transform hover:-translate-y-1">
+                    <a href="{{ route('orders.execute') }}" 
+                    class="group block w-full bg-[#1364FF] hover:bg-[#1053D4] text-white text-center py-4 rounded-2xl font-bold text-lg shadow-xl shadow-blue-100 transition-all duration-300 transform hover:-translate-y-1">
                         Proceed to Checkout
+                        <svg class="w-5 h-5 inline-block ml-2 transform transition-transform group-hover:translate-x-1" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="3" d="M13 7l5 5m0 0l-5 5m5-5H6"></path>
+                        </svg>
                     </a>
                 </div>
             </div>
