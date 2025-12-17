@@ -90,9 +90,11 @@
                     </td>
 
                     <td style="padding: 1rem 1.5rem; text-align: center;">
-                        <a href="{{ route('admin.orders.show', $order->id) }}" 
-                           style="text-decoration: none; background: #fff; border: 1px solid #D1D5DB; color: #374151; padding: 0.4rem 0.8rem; border-radius: 6px; font-size: 0.8rem; font-weight: 500; transition: all 0.2s;">
-                           View Details
+                        <a href="{{ route('admin.orders.show', $order->id) }}" class="btn-action">
+                            <span>View Details</span>
+                            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7" />
+                            </svg>
                         </a>
                     </td>
                 </tr>
@@ -113,13 +115,43 @@
 </div>
 
 <style>
+    /* Efek hover pada baris tabel agar lebih interaktif */
     tr:hover {
         background-color: #F9FAFB;
     }
-    tr:hover a {
-        border-color: var(--primary) !important;
-        color: var(--primary) !important;
-        background-color: var(--primary-soft) !important;
+
+    /* Style untuk Tombol Action */
+    .btn-action {
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+        gap: 0.25rem;
+        
+        background-color: #ffffff;
+        border: 1px solid #D1D5DB;
+        color: #374151;
+        
+        padding: 0.5rem 1rem;
+        border-radius: 8px;
+        font-size: 0.85rem;
+        font-weight: 600;
+        text-decoration: none;
+        transition: all 0.2s ease-in-out;
+        white-space: nowrap; /* Mencegah teks turun ke baris baru */
+    }
+
+    /* Efek Hover Tombol */
+    .btn-action:hover {
+        border-color: #1364FF;
+        background-color: #1364FF;
+        color: #ffffff;
+        transform: translateY(-1px); /* Efek tombol sedikit naik */
+        box-shadow: 0 4px 6px -1px rgba(19, 100, 255, 0.2); /* Bayangan biru halus */
+    }
+
+    /* Animasi panah kecil saat di-hover */
+    .btn-action:hover svg {
+        transform: translateX(2px);
     }
 </style>
 @endsection
