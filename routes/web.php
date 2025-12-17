@@ -3,11 +3,12 @@
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\UserController;
 use App\Http\Controllers\AuthController;
-// Pastikan ItemController ada di sini
 use App\Http\Controllers\ItemController; 
 use App\Http\Controllers\Admin\OrderController;
 use App\Http\Controllers\Admin\DashboardController;
 use App\Http\Controllers\Admin\ShipmentController;
+use App\Http\Controllers\CartController;
+use App\Http\Controllers\OrderProcessController;
 
 
 // =========================================================================
@@ -48,7 +49,6 @@ Route::middleware('auth')->group(function () {
     Route::post('/logout', [AuthController::class, 'logout'])->name('logout');
     
     // 3. PAGES TERPROTEKSI (Menggunakan header_auth)
-    // Tautan di header_auth akan diarahkan ke route ini
     Route::get('/auth/about-us', function () {
         return view('user.pages.about_us'); 
     })->name('about.auth');
@@ -57,8 +57,7 @@ Route::middleware('auth')->group(function () {
         return view('user.pages.contact'); 
     })->name('contact.auth');
 
-    // 4. PRODUCTS, CART, PROFILE, etc.
-    // MODIFIKASI: Menggunakan ItemController untuk daftar produk
+    // 4. PRODUCTS & DETAIL
     Route::get('/products', [ItemController::class, 'index'])->name('products');
 
     Route::get('/product-detail/{id}', function ($id) {
@@ -66,18 +65,28 @@ Route::middleware('auth')->group(function () {
         return view('user.products.product_detail');
     })->name('product.detail');
     
-    Route::get('/cart', function () {
-        return view('user.cart.cart'); 
-    })->name('cart');
+    // 5. FITUR CART (KERANJANG)
+    // Menampilkan halaman ringkasan keranjang
+    Route::get('/cart', [CartController::class, 'index'])->name('cart');
 
-    // Route Profile
-    Route::get('/profile', [AuthController::class, 'profile'])->name('profile');
+    Route::get('/checkout', function () {
+        return "Halaman Checkout Segera Hadir"; 
+    })->name('checkout');
     
-    // Route MyOrders di Profile
-    Route::get('/profile/order/{id}', [UserController::class, 'showOrderDetail'])->name('profile.order.detail');
+    // Proses menambah barang ke database (Dipanggil oleh form modal di katalog)
+    Route::post('/cart/add', [CartController::class, 'add'])->name('cart.add');
+    
+    // Tambahan: Hapus barang dari keranjang
+    Route::delete('/cart/remove/{id}', [CartController::class, 'remove'])->name('cart.remove');
 
-    // Route Proses Update Profile
+    Route::get('/orders/execute', [OrderProcessController::class, 'store'])->name('orders.execute');
+    Route::get('/orders/success/{id}', [OrderProcessController::class, 'success'])->name('orders.success');
+
+    // 6. PROFILE & ORDERS
+    Route::get('/profile', [AuthController::class, 'profile'])->name('profile');
+    Route::get('/profile/order/{id}', [UserController::class, 'showOrderDetail'])->name('profile.order.detail');
     Route::put('/profile/update', [AuthController::class, 'updateProfile'])->name('profile.update');
+
     // =========================================================================
     // == KELOMPOK 3: ROUTES ADMIN
     // =========================================================================
@@ -89,17 +98,13 @@ Route::middleware('auth')->group(function () {
             return back()->with('status', 'Download ' . strtoupper($type) . ' is not implemented yet.');
         })->name('admin.report.download');
 
-        // Orders
+        // Admin Orders
         Route::get('/orders', [OrderController::class, 'index'])->name('admin.orders.index');
         Route::get('/orders/{order}', [OrderController::class, 'show'])->name('admin.orders.show');
         Route::post('/orders/{order}', [OrderController::class, 'updateStatus'])->name('admin.orders.update_status');
         
-        // Items (CRUD)
-        // Perhatian: Rute Admin Item harus berbeda dengan rute client Item
+        // Admin Items (CRUD)
         Route::get('/items', [ItemController::class, 'indexAdmin'])->name('admin.items.index'); 
-        // Anda mungkin perlu membuat fungsi indexAdmin() di ItemController untuk tampilan admin
-
-        // Route CRUD Item lainnya...
         Route::get('/items/create',    [ItemController::class, 'create'])->name('admin.items.create');
         Route::post('/items',          [ItemController::class, 'store'])->name('admin.items.store');
         Route::get('/items/{item}/edit', [ItemController::class, 'edit'])->name('admin.items.edit');

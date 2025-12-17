@@ -49,65 +49,52 @@
             <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-8">
                 
                 @forelse ($items as $item)
-                    {{-- Product Card --}}
-                    <div class="bg-gray-50 rounded-xl shadow-lg border border-gray-100 overflow-hidden transform hover:shadow-xl transition duration-300 hover:scale-[1.02] h-full flex flex-col relative group">
+                    @php
+                        $finalPrice = $item->discount_price ?? $item->price;
+                        $originalPrice = $item->price;
+                        $isSale = $item->discount_price && $item->discount_price < $item->price;
+                        $formatPrice = fn($p) => 'Rp' . number_format($p, 0, ',', '.');
+                    @endphp
+
+                    {{-- Product Card (Seluruh area card memicu modal) --}}
+                    <div 
+                        data-id="{{ $item->id }}"
+                        data-name="{{ $item->name }}"
+                        data-category="{{ $item->category }}"
+                        data-price="{{ $finalPrice }}"
+                        class="open-cart-modal bg-gray-50 rounded-xl shadow-lg border border-gray-100 overflow-hidden transform hover:shadow-xl transition duration-300 hover:scale-[1.02] h-full flex flex-col relative group cursor-pointer"
+                    >
                         
-                        {{-- Button Add to Cart --}}
-                        <button 
-                            data-id="{{ $item->id }}"
-                            data-name="{{ $item->name }}"
-                            data-category="{{ $item->category }}"
-                            data-price="{{ $item->discount_price ?? $item->price }}"
-                            class="open-cart-modal absolute top-3 right-3 w-10 h-10 bg-pink-600 text-white rounded-full flex items-center justify-center shadow-lg hover:bg-pink-700 transition z-10"
-                            title="Add to Cart"
-                        >
-                            <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 3h2l.4 2M7 13h10l4-8H5.4M7 13L5.4 5M7 13l-2.293 2.293c-.63.63-.184 1.707.707 1.707H17m0 0a2 2 0 100 4 2 2 0 000-4zm-8 2a2 2 0 11-4 0 2 2 0 014 0z"></path></svg>
-                        </button>
+                        {{-- Icon Hover Indikator --}}
+                        <div class="absolute top-3 right-3 w-10 h-10 bg-pink-600 text-white rounded-full flex items-center justify-center shadow-lg opacity-0 group-hover:opacity-100 transition-opacity z-10">
+                            <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 4v16m8-8H4"></path></svg>
+                        </div>
 
-                        {{-- Isi Card --}}
-                        <a href="{{ route('product.detail', $item->id) }}" class="flex flex-col flex-grow">
+                        {{-- Image Area --}}
+                        <div class="p-4 bg-gray-100 flex justify-center items-center h-48"> 
+                            @if($item->image_path)
+                                <img src="{{ asset($item->image_path) }}" alt="{{ $item->name }}" class="max-h-full object-contain">
+                            @else
+                                <div class="text-gray-400 text-xs">No Image</div>
+                            @endif
+                        </div>
+                        
+                        {{-- Detail Text --}}
+                        <div class="p-5 flex flex-col flex-grow">
+                            <h3 class="text-lg font-bold text-gray-900 mb-1 flex-grow">{{ $item->name }}</h3>
+                            <span class="text-sm text-gray-500 uppercase tracking-wider mb-2">{{ $item->category }}</span>
                             
-                            {{-- Image Area --}}
-                            <div class="p-4 bg-gray-100 flex justify-center items-center h-48"> 
-                                <img 
-                                    src="{{ asset($item->image_path) }}" 
-                                    alt="{{ $item->name }}" 
-                                    class="max-h-full object-contain"
-                                >
+                            <div class="mt-auto pt-2 border-t border-gray-100">
+                                @if ($isSale)
+                                    <span class="text-sm text-gray-400 line-through mr-2">{{ $formatPrice($originalPrice) }}</span>
+                                @endif
+                                <span class="text-xl font-extrabold {{ $isSale ? 'text-pink-600' : 'text-gray-900' }}">
+                                    {{ $formatPrice($finalPrice) }}
+                                </span>
                             </div>
-                            
-                            {{-- Detail Text --}}
-                            <div class="p-5 flex flex-col flex-grow">
-                                
-                                {{-- NAMA OBAT --}}
-                                <h3 class="text-lg font-bold text-gray-900 mb-1 flex-grow">{{ $item->name }}</h3>
-                                
-                                {{-- CATEGORY --}}
-                                <span class="text-sm text-gray-500 uppercase tracking-wider mb-2">{{ $item->category }}</span>
-                                
-                                <div class="mt-auto pt-2 border-t border-gray-100">
-                                    @php
-                                        $finalPrice = $item->discount_price ?? $item->price;
-                                        $originalPrice = $item->price;
-                                        $isSale = $item->discount_price && $item->discount_price < $item->price;
-                                        $formatPrice = fn($p) => 'Rp' . number_format($p, 0, ',', '.');
-                                    @endphp
-
-                                    {{-- Harga Asli (jika ada diskon) --}}
-                                    @if ($isSale)
-                                        <span class="text-sm text-gray-400 line-through mr-2">{{ $formatPrice($originalPrice) }}</span>
-                                    @endif
-                                    
-                                    {{-- Harga Final --}}
-                                    <span class="text-xl font-extrabold {{ $isSale ? 'text-pink-600' : 'text-gray-900' }}">
-                                        {{ $formatPrice($finalPrice) }}
-                                    </span>
-                                </div>
-                            </div>
-                        </a> {{-- Tutup Link Card --}}
+                        </div>
                     </div>
                 @empty
-                    {{-- Jika tidak ada produk yang ditemukan --}}
                     <div class="md:col-span-4 text-center p-12 bg-yellow-50 rounded-xl">
                         <p class="text-xl text-gray-700 font-medium">No products found matching your criteria.</p>
                         <p class="text-gray-500 mt-2">Try adjusting your search filters or check back later!</p>
@@ -126,16 +113,16 @@
     {{-- =============================================== --}}
     {{-- MODAL ADD TO CART --}}
     {{-- =============================================== --}}
-    <div id="cart-modal" class="fixed inset-0 bg-gray-900 bg-opacity-75 z-50 flex items-center justify-center hidden">
+    <div id="cart-modal" class="fixed inset-0 bg-gray-900 bg-opacity-75 z-50 flex items-center justify-center hidden p-4">
         <div class="bg-white rounded-xl shadow-2xl w-full max-w-lg p-6 md:p-8 transform transition-all">
             
             <h3 class="text-2xl font-bold text-gray-900 mb-4 border-b pb-2">Add Item to Cart</h3>
             
-            <form id="add-to-cart-form" method="POST" action="{{ route('cart') }}"> 
+            {{-- ACTION diarahkan ke route POST cart.add --}}
+            <form id="add-to-cart-form" method="POST" action="{{ route('cart.add') }}"> 
                 @csrf
                 <input type="hidden" name="item_id" id="modal-item-id">
                 
-                {{-- Detail Produk di Modal --}}
                 <div class="mb-5 space-y-2">
                     <p class="text-sm text-gray-500">Product Name:</p>
                     <h4 id="modal-item-name" class="text-xl font-extrabold text-[#1364FF]"></h4>
@@ -143,7 +130,6 @@
                     <p class="text-md text-gray-600">Price: <span id="modal-item-price" class="font-bold text-gray-900"></span></p>
                 </div>
 
-                {{-- Input Kuantitas --}}
                 <div class="mb-5">
                     <label for="quantity" class="block text-sm font-medium text-gray-700 mb-2">Quantity</label>
                     <div class="flex items-center space-x-3">
@@ -153,13 +139,11 @@
                     </div>
                 </div>
 
-                {{-- Catatan Khusus --}}
                 <div class="mb-6">
                     <label for="notes" class="block text-sm font-medium text-gray-700 mb-2">Special Notes (Optional)</label>
                     <textarea name="notes" id="modal-notes" rows="3" class="w-full p-3 border border-gray-300 rounded-lg focus:border-[#1364FF] focus:ring-1 focus:ring-[#1364FF]" placeholder="e.g., Packaging instructions, special delivery time..."></textarea>
                 </div>
 
-                {{-- Tombol Aksi --}}
                 <div class="flex justify-end space-x-3">
                     <button type="button" id="cancel-cart-modal" class="py-2 px-4 border border-gray-300 rounded-lg text-gray-700 hover:bg-gray-100 transition">
                         Cancel
@@ -172,24 +156,17 @@
         </div>
     </div>
 
-    {{-- =============================================== --}}
-    {{-- MODAL --}}
-    {{-- =============================================== --}}
     <script>
         document.addEventListener('DOMContentLoaded', function () {
             const modal = document.getElementById('cart-modal');
             const openButtons = document.querySelectorAll('.open-cart-modal');
             const cancelButton = document.getElementById('cancel-cart-modal');
-            const form = document.getElementById('add-to-cart-form');
             const qtyInput = document.getElementById('modal-quantity');
             const incrementBtn = document.getElementById('increment-qty');
             const decrementBtn = document.getElementById('decrement-qty');
 
             openButtons.forEach(button => {
-                button.addEventListener('click', function(e) {
-                    e.preventDefault();
-                    e.stopPropagation();
-                    
+                button.addEventListener('click', function() {
                     const id = this.getAttribute('data-id');
                     const name = this.getAttribute('data-name');
                     const category = this.getAttribute('data-category');
@@ -206,25 +183,27 @@
                     document.getElementById('modal-notes').value = '';
 
                     modal.classList.remove('hidden');
+                    document.body.style.overflow = 'hidden';
                 });
             });
 
             const closeModal = () => {
                 modal.classList.add('hidden');
+                document.body.style.overflow = '';
             };
 
             cancelButton.addEventListener('click', closeModal);
             modal.addEventListener('click', (e) => {
-                if (e.target === modal) {
-                    closeModal(); 
-                }
+                if (e.target === modal) closeModal(); 
             });
 
-            incrementBtn.addEventListener('click', () => {
+            incrementBtn.addEventListener('click', (e) => {
+                e.stopPropagation();
                 qtyInput.value = parseInt(qtyInput.value) + 1;
             });
 
-            decrementBtn.addEventListener('click', () => {
+            decrementBtn.addEventListener('click', (e) => {
+                e.stopPropagation();
                 let currentVal = parseInt(qtyInput.value);
                 if (currentVal > 1) {
                     qtyInput.value = currentVal - 1;
