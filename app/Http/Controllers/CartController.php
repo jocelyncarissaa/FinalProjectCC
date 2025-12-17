@@ -9,6 +9,9 @@ use Illuminate\Support\Facades\Auth;
 
 class CartController extends Controller
 {
+    /**
+     * Menampilkan halaman keranjang belanja.
+     */
     public function index()
     {
         $cartItems = Cart::with('item')->where('user_id', Auth::id())->get();
@@ -20,33 +23,71 @@ class CartController extends Controller
         return view('user.cart.cart_summary', compact('cartItems', 'total'));
     }
 
+    /**
+     * Menambah atau Mengurangi kuantitas produk di keranjang.
+     */
     public function add(Request $request)
     {
+        // Validasi input
         $request->validate([
             'item_id' => 'required|exists:items,id',
-            'quantity' => 'required|integer|min:1',
+            'quantity' => 'required|integer',
         ]);
 
-        // Cek jika barang sudah ada di keranjang user tersebut
         $existingCart = Cart::where('user_id', Auth::id())
                             ->where('item_id', $request->item_id)
                             ->first();
 
         if ($existingCart) {
-            $existingCart->increment('quantity', $request->quantity);
-            if($request->notes) $existingCart->update(['notes' => $request->notes]);
+            // Hitung kuantitas baru
+            $newQuantity = $existingCart->quantity + $request->quantity;
+
+            // Jika kuantitas 0 atau kurang, hapus item
+            if ($newQuantity <= 0) {
+                $existingCart->delete();
+                
+                if ($request->ajax()) {
+                    return response()->json(['status' => 'removed']);
+                }
+                return redirect()->route('cart')->with('success', 'Item removed from cart.');
+            }
+
+            // Update kuantitas
+            $existingCart->update(['quantity' => $newQuantity]);
+            
+            // Update catatan jika ada kiriman notes baru
+            if($request->notes) {
+                $existingCart->update(['notes' => $request->notes]);
+            }
+
+            // Respons untuk AJAX (Plus-Minus di Cart)
+            if ($request->ajax()) {
+                return response()->json([
+                    'status' => 'updated',
+                    'new_qty' => $newQuantity
+                ]);
+            }
         } else {
+            // Jika item belum ada (Tambah dari katalog)
             Cart::create([
                 'user_id' => Auth::id(),
                 'item_id' => $request->item_id,
-                'quantity' => $request->quantity,
+                'quantity' => max(1, $request->quantity),
                 'notes' => $request->notes,
             ]);
+
+            if ($request->ajax()) {
+                return response()->json(['status' => 'added']);
+            }
         }
 
+        // Respons default untuk form submit biasa (Halaman Katalog)
         return redirect()->route('cart')->with('success', 'Product added to cart!');
     }
 
+    /**
+     * Menghapus item secara manual melalui tombol "Remove".
+     */
     public function remove($id)
     {
         Cart::where('id', $id)->where('user_id', Auth::id())->delete();
