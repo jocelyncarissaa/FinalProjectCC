@@ -56,7 +56,7 @@
                         $formatPrice = fn($p) => 'Rp' . number_format($p, 0, ',', '.');
                     @endphp
 
-                    {{-- Product Card (Sekarang seluruh area card memicu modal) --}}
+                    {{-- Product Card (Seluruh area card memicu modal) --}}
                     <div 
                         data-id="{{ $item->id }}"
                         data-name="{{ $item->name }}"
@@ -72,29 +72,22 @@
 
                         {{-- Image Area --}}
                         <div class="p-4 bg-gray-100 flex justify-center items-center h-48"> 
-                            <img 
-                                src="{{ asset($item->image_path) }}" 
-                                alt="{{ $item->name }}" 
-                                class="max-h-full object-contain"
-                            >
+                            @if($item->image_path)
+                                <img src="{{ asset($item->image_path) }}" alt="{{ $item->name }}" class="max-h-full object-contain">
+                            @else
+                                <div class="text-gray-400 text-xs">No Image</div>
+                            @endif
                         </div>
                         
                         {{-- Detail Text --}}
                         <div class="p-5 flex flex-col flex-grow">
-                            
-                            {{-- NAMA OBAT --}}
                             <h3 class="text-lg font-bold text-gray-900 mb-1 flex-grow">{{ $item->name }}</h3>
-                            
-                            {{-- CATEGORY --}}
                             <span class="text-sm text-gray-500 uppercase tracking-wider mb-2">{{ $item->category }}</span>
                             
                             <div class="mt-auto pt-2 border-t border-gray-100">
-                                {{-- Harga Asli (jika ada diskon) --}}
                                 @if ($isSale)
                                     <span class="text-sm text-gray-400 line-through mr-2">{{ $formatPrice($originalPrice) }}</span>
                                 @endif
-                                
-                                {{-- Harga Final --}}
                                 <span class="text-xl font-extrabold {{ $isSale ? 'text-pink-600' : 'text-gray-900' }}">
                                     {{ $formatPrice($finalPrice) }}
                                 </span>
@@ -102,7 +95,6 @@
                         </div>
                     </div>
                 @empty
-                    {{-- Jika tidak ada produk yang ditemukan --}}
                     <div class="md:col-span-4 text-center p-12 bg-yellow-50 rounded-xl">
                         <p class="text-xl text-gray-700 font-medium">No products found matching your criteria.</p>
                         <p class="text-gray-500 mt-2">Try adjusting your search filters or check back later!</p>
@@ -126,11 +118,11 @@
             
             <h3 class="text-2xl font-bold text-gray-900 mb-4 border-b pb-2">Add Item to Cart</h3>
             
-            <form id="add-to-cart-form" method="POST" action="{{ route('cart') }}"> 
+            {{-- ACTION diarahkan ke route POST cart.add --}}
+            <form id="add-to-cart-form" method="POST" action="{{ route('cart.add') }}"> 
                 @csrf
                 <input type="hidden" name="item_id" id="modal-item-id">
                 
-                {{-- Detail Produk di Modal --}}
                 <div class="mb-5 space-y-2">
                     <p class="text-sm text-gray-500">Product Name:</p>
                     <h4 id="modal-item-name" class="text-xl font-extrabold text-[#1364FF]"></h4>
@@ -138,7 +130,6 @@
                     <p class="text-md text-gray-600">Price: <span id="modal-item-price" class="font-bold text-gray-900"></span></p>
                 </div>
 
-                {{-- Input Kuantitas --}}
                 <div class="mb-5">
                     <label for="quantity" class="block text-sm font-medium text-gray-700 mb-2">Quantity</label>
                     <div class="flex items-center space-x-3">
@@ -148,13 +139,11 @@
                     </div>
                 </div>
 
-                {{-- Catatan Khusus --}}
                 <div class="mb-6">
                     <label for="notes" class="block text-sm font-medium text-gray-700 mb-2">Special Notes (Optional)</label>
                     <textarea name="notes" id="modal-notes" rows="3" class="w-full p-3 border border-gray-300 rounded-lg focus:border-[#1364FF] focus:ring-1 focus:ring-[#1364FF]" placeholder="e.g., Packaging instructions, special delivery time..."></textarea>
                 </div>
 
-                {{-- Tombol Aksi --}}
                 <div class="flex justify-end space-x-3">
                     <button type="button" id="cancel-cart-modal" class="py-2 px-4 border border-gray-300 rounded-lg text-gray-700 hover:bg-gray-100 transition">
                         Cancel
@@ -167,9 +156,6 @@
         </div>
     </div>
 
-    {{-- =============================================== --}}
-    {{-- JAVASCRIPT --}}
-    {{-- =============================================== --}}
     <script>
         document.addEventListener('DOMContentLoaded', function () {
             const modal = document.getElementById('cart-modal');
@@ -179,7 +165,6 @@
             const incrementBtn = document.getElementById('increment-qty');
             const decrementBtn = document.getElementById('decrement-qty');
 
-            // Buka Modal
             openButtons.forEach(button => {
                 button.addEventListener('click', function() {
                     const id = this.getAttribute('data-id');
@@ -198,14 +183,13 @@
                     document.getElementById('modal-notes').value = '';
 
                     modal.classList.remove('hidden');
-                    document.body.style.overflow = 'hidden'; // Lock scroll
+                    document.body.style.overflow = 'hidden';
                 });
             });
 
-            // Tutup Modal
             const closeModal = () => {
                 modal.classList.add('hidden');
-                document.body.style.overflow = ''; // Unlock scroll
+                document.body.style.overflow = '';
             };
 
             cancelButton.addEventListener('click', closeModal);
@@ -213,7 +197,6 @@
                 if (e.target === modal) closeModal(); 
             });
 
-            // Logika Kuantitas
             incrementBtn.addEventListener('click', (e) => {
                 e.stopPropagation();
                 qtyInput.value = parseInt(qtyInput.value) + 1;
