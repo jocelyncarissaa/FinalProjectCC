@@ -46,4 +46,9 @@ class Order extends Model
             default => 'background: #F3F4F6; color: #374151;' // Gray
         };
     }
+
+    public function items()
+    {
+        return $this->hasMany(OrderDetail::class);
+    }
 }
