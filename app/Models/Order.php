@@ -11,28 +11,41 @@ class Order extends Model
 
     protected $fillable = [
         'user_id',
-        'total_amount',
+        'total_amount', // Sinkron dengan kolom di phpMyAdmin
         'shipping_address',
         'status'
     ];
 
-    /**
-     * Pastikan fungsi ini ada agar OrderProcessController bisa memanggil 'details'
-     */
-    public function details()
+    public function user()
     {
-        // Parameter kedua adalah foreign key di tabel order_details
-        return $this->hasMany(OrderDetail::class, 'order_id');
+        return $this->belongsTo(User::class);
     }
 
-    // Tambahkan juga relasi 'items' agar UserController tidak error
+    /**
+     * Relasi ke OrderDetail.
+     * Dibuat dua nama agar sinkron dengan UserController (items) 
+     * dan OrderProcessController (details).
+     */
     public function items()
     {
         return $this->hasMany(OrderDetail::class, 'order_id');
     }
 
-    public function user()
+    public function details()
     {
-        return $this->belongsTo(User::class);
+        return $this->hasMany(OrderDetail::class, 'order_id');
+    }
+
+    // Accessor untuk warna status badge
+    public function getStatusBadgeClassAttribute()
+    {
+        return match($this->status) {
+            'paid'      => 'background: #D1FAE5; color: #065F46;',
+            'pending'   => 'background: #FEF3C7; color: #92400E;',
+            'shipped'   => 'background: #DBEAFE; color: #1E40AF;',
+            'cancelled' => 'background: #FEE2E2; color: #991B1B;',
+            'completed' => 'background: #E0E7FF; color: #3730A3;',
+            default     => 'background: #F3F4F6; color: #374151;'
+        };
     }
 }
