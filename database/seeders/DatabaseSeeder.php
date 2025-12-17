@@ -23,9 +23,9 @@ class DatabaseSeeder extends Seeder
             OrderSeeder::class, // Pastikan ini dipanggil TERAKHIR karena butuh user & items
         ]);
 
-        User::factory()->create([
-            'name' => 'Test User',
-            'email' => 'test@example.com',
-        ]);
+        // User::factory()->create([
+        //     'name' => 'Test User',
+        //     'email' => 'test@example.com',
+        // ]);
     }
 }
