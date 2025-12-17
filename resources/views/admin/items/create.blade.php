@@ -131,14 +131,16 @@
                                 </div>
 
                                 <div class="col-12">
-                                    <label class="field-label">Image Path (optional)</label>
-                                    <input
-                                        type="text"
-                                        name="image_path"
-                                        value="{{ old('image_path') }}"
-                                        class="field-input"
-                                        placeholder="e.g. images/paracetamol.png">
-                                    <div class="help-text">You can store a relative image URL or leave this field empty.</div>
+                                    <label class="field-label">Image (optional)</label>
+                                        <select name="image_path" class="field-input">
+                                        <option value="">-- no image --</option>
+                                            @for($i=1; $i<=8; $i++)
+                                                <option value="https://pharmaplus-img-2025.s3.us-east-1.amazonaws.com/medicine-{{ $i }}.jpg">
+                                                medicine-{{ $i }}.jpg
+                                                </option>
+                                            @endfor
+                                        </select>
+
                                 </div>
                             </div>
                         </div>
