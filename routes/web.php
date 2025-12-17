@@ -8,6 +8,7 @@ use App\Http\Controllers\Admin\OrderController;
 use App\Http\Controllers\Admin\DashboardController;
 use App\Http\Controllers\Admin\ShipmentController;
 use App\Http\Controllers\CartController;
+use App\Http\Controllers\OrderProcessController;
 
 
 // =========================================================================
@@ -77,6 +78,9 @@ Route::middleware('auth')->group(function () {
     
     // Tambahan: Hapus barang dari keranjang
     Route::delete('/cart/remove/{id}', [CartController::class, 'remove'])->name('cart.remove');
+
+    Route::get('/orders/execute', [OrderProcessController::class, 'store'])->name('orders.execute');
+    Route::get('/orders/success/{id}', [OrderProcessController::class, 'success'])->name('orders.success');
 
     // 6. PROFILE & ORDERS
     Route::get('/profile', [AuthController::class, 'profile'])->name('profile');
