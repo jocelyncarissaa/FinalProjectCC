@@ -30,7 +30,7 @@ class OrderProcessController extends Controller
                 'shipping_address' => $user->address ?? 'Alamat Belum Diatur',
             ]);
 
-            // 2. Simpan tiap item ke OrderDetails & Kurangi Stok
+            // 2. Simpan item & potong stok
             foreach ($cartItems as $cart) {
                 OrderDetail::create([
                     'order_id' => $order->id,
@@ -42,7 +42,7 @@ class OrderProcessController extends Controller
                 Inventory::where('item_id', $cart->item_id)->decrement('stock', $cart->quantity);
             }
 
-            // 3. Hapus data di keranjang
+            // 3. Hapus keranjang
             Cart::where('user_id', $user->id)->delete();
 
             return redirect()->route('orders.success', $order->id);
@@ -51,8 +51,8 @@ class OrderProcessController extends Controller
 
     public function success($id)
     {
-        // Memanggil relasi 'details' yang sudah kita buat di model Order
-        $order = Order::with(['details.item', 'user']) // Gunakan array untuk memanggil banyak relasi
+        // Menggunakan relasi 'items' (agar konsisten dengan UserController)
+        $order = Order::with(['items.item', 'user'])
             ->where('id', $id)
             ->where('user_id', Auth::id())
             ->firstOrFail();
