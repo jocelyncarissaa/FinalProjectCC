@@ -1,22 +1,25 @@
-# bdd/features/environment.py
-import os
-import requests
+Feature: Authentication (Login & Logout)
+    As a user of PharmaPlus
+    I want to login and logout
+    So that I can access protected pages based on my role
 
-def before_all(context):
-    # Ambil BASE_URL dari env, kalau tidak ada pakai default
-    # Jalankan Laravel: php artisan serve -> biasanya http://127.0.0.1:8000
-    context.base_url = os.getenv("BASE_URL", "http://127.0.0.1:8000").rstrip("/")
-    context.session = requests.Session()
+  Scenario: Admin can login and is redirected to admin dashboard
+    Given I open the login page
+    When I login with email "admin@pharmaplus.com" and password "password"
+    Then I should be redirected to "/admin/dashboard"
 
-    # Headers default untuk “minta JSON” (Laravel biasanya balikin 422 kalau invalid)
-    context.default_headers = {
-        "Accept": "application/json",
-    }
+  Scenario: Customer can login and is redirected to home
+    Given I open the login page
+    When I login with email "customer@gmail.com" and password "password"
+    Then I should be redirected to "/home"
 
-def before_scenario(context, scenario):
-    context.last_response = None
-    context.last_json = None
-    context.authenticated = False
+  Scenario: Login fails with wrong password
+    Given I open the login page
+    When I login with email "customer@gmail.com" and password "wrong-password"
+    Then I should not be authenticated
 
-def after_all(context):
-    context.session.close()
+  Scenario: User can logout and protected page becomes inaccessible
+    Given I open the login page
+    When I login with email "customer@gmail.com" and password "password"
+    And I logout
+    Then accessing "/home" should redirect to "/login"

@@ -1,101 +1,93 @@
-# bdd/features/steps/auth_steps.py
 from behave import given, when, then
 
-# === UBAH INI sesuai route Laravel kamu ===
-LOGIN_ENDPOINT = "/login"   # kalau kamu punya /api/login, ganti jadi itu
+def _ensure_csrf(context, page="/login", force_refresh=False):
+    if force_refresh:
+        context.csrf_token = None  # buang token lama
 
-# === UBAH INI sesuai field form login kamu ===
-USERNAME_FIELD = "email"
-PASSWORD_FIELD = "password"
+    if getattr(context, "csrf_token", None):
+        return context.csrf_token
+
+    context.http_get(page)
+    token = getattr(context, "csrf_token", None)
+    assert token, (
+        "CSRF token tidak ditemukan. Pastikan halaman punya input hidden _token "
+        "atau meta csrf-token."
+    )
+    return token
 
 
-@given("the API base URL is set")
-def step_base_url(context):
-    assert context.base_url.startswith("http"), "BASE_URL belum valid. Set BASE_URL atau cek environment.py"
+@given('I open the login page')
+def step_open_login(context):
+    resp = context.http_get("/login")
+    assert resp.status_code in (200, 302), f"Unexpected status: {resp.status_code}"
 
 
-@given("I have valid login credentials")
-def step_valid_creds(context):
-    # PENTING: pastikan user ini ada (via seeder/database)
-    # Silakan ganti sesuai user test kamu
-    context.login_payload = {
-        USERNAME_FIELD: "test@example.com",
-        PASSWORD_FIELD: "password123",
+@when('I login with email "{email}" and password "{password}"')
+def step_login(context, email, password):
+    token = _ensure_csrf(context, "/login")
+
+    payload = {
+        "_token": token,
+        "email": email,
+        "password": password,
     }
 
+    resp = context.http_post("/login", data=payload, allow_redirects=False)
+    context.last_response = resp
 
-@given("I have invalid login credentials")
-def step_invalid_creds(context):
-    context.login_payload = {
-        USERNAME_FIELD: "test@example.com",
-        PASSWORD_FIELD: "wrong-password",
+    if resp.status_code == 302:
+        location = resp.headers.get("Location", "")
+        if "/login" not in location:
+            context.authenticated = True
+        else:
+            context.authenticated = False
+    else:
+        context.authenticated = False
+
+
+@then('I should be redirected to "{path}"')
+def step_redirect_to(context, path):
+    resp = context.last_response
+    assert resp is not None, "No response captured. Did you run the login step?"
+
+    # kalo login sukses -> redirect ke admin.dashboard atau home
+    assert resp.status_code == 302, f"Expected 302 redirect, got {resp.status_code}"
+    location = resp.headers.get("Location", "")
+
+    # Location bisa absolute URL atau path, jadi cek suffix/contains
+    assert path in location, f"Expected redirect to contain '{path}', got '{location}'"
+
+
+@then("I should not be authenticated")
+def step_not_authenticated(context):
+    assert context.authenticated is False, "Expected NOT authenticated, but it seems authenticated."
+
+
+@when("I logout")
+def step_logout(context):
+    token = _ensure_csrf(context, "/home", force_refresh=True)
+
+    headers = {
+        "X-CSRF-TOKEN": token,
+        "Referer": context.base_url + "/home",
     }
 
-
-@when("I send a login request")
-def step_send_login(context):
-    url = context.base_url + LOGIN_ENDPOINT
-
-    # Kirim sebagai form (umum untuk Laravel web login)
-    # Tapi tetap minta JSON lewat header Accept: application/json
-    resp = context.session.post(
-        url,
-        data=context.login_payload,
-        headers=context.default_headers,
-        allow_redirects=False  # biar kita bisa deteksi 302 juga
+    resp = context.http_post(
+        "/logout",
+        data={"_token": token},
+        headers=headers,
+        allow_redirects=False
     )
 
     context.last_response = resp
-
-    # coba parse json kalau ada
-    try:
-        context.last_json = resp.json()
-    except Exception:
-        context.last_json = None
+    assert resp.status_code == 302, f"Expected 302 redirect on logout, got {resp.status_code}"
+    context.authenticated = False
 
 
-@then("the login should be successful")
-def step_login_success(context):
-    resp = context.last_response
-    assert resp is not None, "Belum ada response. Step login belum jalan?"
-
-    # Kemungkinan sukses:
-    # - 200 (JSON) / 204
-    # - 302 redirect (web form sukses login)
-    if resp.status_code in (200, 204):
-        context.authenticated = True
-        return
-
-    if resp.status_code == 302:
-        # Sukses login web biasanya redirect ke /home /dashboard
-        context.authenticated = True
-        return
-
-    # Jika gagal, kasih debug ringkas
-    raise AssertionError(
-        f"Expected login success but got {resp.status_code}. "
-        f"Body: {resp.text[:200]}"
-    )
-
-
-@then("the login should fail")
-def step_login_fail(context):
-    resp = context.last_response
-    assert resp is not None, "Belum ada response. Step login belum jalan?"
-
-    # Kemungkinan gagal:
-    # - 401 unauthorized (API)
-    # - 422 validation error (Laravel JSON validation)
-    # - 302 redirect back (web login gagal) -> sering terjadi
-    if resp.status_code in (401, 422):
-        return
-
-    if resp.status_code == 302:
-        # Banyak Laravel login gagal redirect back ke /login
-        # Biasanya ada session error; di sini kita anggap fail OK
-        return
-
-    raise AssertionError(
-        f"Expected login failure but got {resp.status_code}. "
-        f"Body: {resp.text[:200]}"
-    )
+@then('accessing "{protected_path}" should redirect to "{login_path}"')
+def step_protected_redirect(context, protected_path, login_path):
+    # akses halaman protected tanpa login, harus redirect ke /login
+    resp = context.http_get(protected_path, allow_redirects=False)
+    assert resp.status_code == 302, f"Expected 302, got {resp.status_code}"
+    location = resp.headers.get("Location", "")
+    assert login_path in location, f"Expected redirect to '{login_path}', got '{location}'"

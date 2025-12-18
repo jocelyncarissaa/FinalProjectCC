@@ -2,9 +2,9 @@
 
 @section('content')
 
-    <div class="bg-hero-bg"> 
+    <div class="bg-hero-bg">
         <div class="container mx-auto px-4 sm:px-6 lg:px-8 py-10 lg:py-16">
-            
+
             {{-- Header --}}
             <div class="text-center mb-10">
                 <h1 class="text-4xl font-extrabold text-gray-900 mb-2">Our Healthcare Catalog</h1>
@@ -13,22 +13,22 @@
 
             {{-- Search & Filter Section --}}
             <div class="mb-10 p-6 bg-white rounded-xl shadow-lg border border-gray-100">
-                <form action="{{ route('products') }}" method="GET" class="flex flex-col md:flex-row gap-4">
-                    
-                    <input 
-                        type="text" 
-                        name="search" 
-                        placeholder="Search by product name, category, or indication..." 
+                {{-- <form action="{{ route('products') }}" method="GET" class="flex flex-col md:flex-row gap-4"> --}}
+                <form action="{{ url()->current() }}" method="GET" class="flex flex-col md:flex-row gap-4">
+                    <input
+                        type="text"
+                        name="search"
+                        placeholder="Search by product name, category, or indication..."
                         value="{{ request('search') }}"
                         class="flex-grow p-3 border border-gray-300 rounded-lg focus:border-[#1364FF] focus:ring-1 focus:ring-[#1364FF]"
                     >
-                    
+
                     <select name="category" class="p-3 border border-gray-300 rounded-lg focus:border-[#1364FF] focus:ring-1 focus:ring-[#1364FF] w-full md:w-auto">
                         <option value="">All Categories</option>
                         @php
                             $categories = [
-                                'Analgesic', 'Antibiotic', 'Antidepressant', 
-                                'Antidiabetic', 'Antifungal', 'Antipyretic', 
+                                'Analgesic', 'Antibiotic', 'Antidepressant',
+                                'Antidiabetic', 'Antifungal', 'Antipyretic',
                                 'Antiseptic', 'Antiviral'
                             ];
                         @endphp
@@ -47,7 +47,7 @@
 
             {{-- Product Grid --}}
             <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-8">
-                
+
                 @forelse ($items as $item)
                     @php
                         $finalPrice = $item->discount_price ?? $item->price;
@@ -57,33 +57,33 @@
                     @endphp
 
                     {{-- Product Card (Seluruh area card memicu modal) --}}
-                    <div 
+                    <div
                         data-id="{{ $item->id }}"
                         data-name="{{ $item->name }}"
                         data-category="{{ $item->category }}"
                         data-price="{{ $finalPrice }}"
                         class="open-cart-modal bg-gray-50 rounded-xl shadow-lg border border-gray-100 overflow-hidden transform hover:shadow-xl transition duration-300 hover:scale-[1.02] h-full flex flex-col relative group cursor-pointer"
                     >
-                        
+
                         {{-- Icon Hover Indikator --}}
                         <div class="absolute top-3 right-3 w-10 h-10 bg-pink-600 text-white rounded-full flex items-center justify-center shadow-lg opacity-0 group-hover:opacity-100 transition-opacity z-10">
                             <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 4v16m8-8H4"></path></svg>
                         </div>
 
                         {{-- Image Area --}}
-                        <div class="p-4 bg-gray-100 flex justify-center items-center h-48"> 
+                        <div class="p-4 bg-gray-100 flex justify-center items-center h-48">
                             @if($item->image_path)
                                 <img src="{{ asset($item->image_path) }}" alt="{{ $item->name }}" class="max-h-full object-contain">
                             @else
                                 <div class="text-gray-400 text-xs">No Image</div>
                             @endif
                         </div>
-                        
+
                         {{-- Detail Text --}}
                         <div class="p-5 flex flex-col flex-grow">
                             <h3 class="text-lg font-bold text-gray-900 mb-1 flex-grow">{{ $item->name }}</h3>
                             <span class="text-sm text-gray-500 uppercase tracking-wider mb-2">{{ $item->category }}</span>
-                            
+
                             <div class="mt-auto pt-2 border-t border-gray-100">
                                 @if ($isSale)
                                     <span class="text-sm text-gray-400 line-through mr-2">{{ $formatPrice($originalPrice) }}</span>
@@ -106,7 +106,7 @@
             <div class="mt-12">
                 {{ $items->links() }}
             </div>
-            
+
         </div>
     </div>
 
@@ -115,14 +115,14 @@
     {{-- =============================================== --}}
     <div id="cart-modal" class="fixed inset-0 bg-gray-900 bg-opacity-75 z-50 flex items-center justify-center hidden p-4">
         <div class="bg-white rounded-xl shadow-2xl w-full max-w-lg p-6 md:p-8 transform transition-all">
-            
+
             <h3 class="text-2xl font-bold text-gray-900 mb-4 border-b pb-2">Add Item to Cart</h3>
-            
+
             {{-- ACTION diarahkan ke route POST cart.add --}}
-            <form id="add-to-cart-form" method="POST" action="{{ route('cart.add') }}"> 
+            <form id="add-to-cart-form" method="POST" action="{{ route('cart.add') }}">
                 @csrf
                 <input type="hidden" name="item_id" id="modal-item-id">
-                
+
                 <div class="mb-5 space-y-2">
                     <p class="text-sm text-gray-500">Product Name:</p>
                     <h4 id="modal-item-name" class="text-xl font-extrabold text-[#1364FF]"></h4>
@@ -194,7 +194,7 @@
 
             cancelButton.addEventListener('click', closeModal);
             modal.addEventListener('click', (e) => {
-                if (e.target === modal) closeModal(); 
+                if (e.target === modal) closeModal();
             });
 
             incrementBtn.addEventListener('click', (e) => {
