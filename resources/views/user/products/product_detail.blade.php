@@ -13,7 +13,6 @@
 
             {{-- Search & Filter Section --}}
             <div class="mb-10 p-6 bg-white rounded-xl shadow-lg border border-gray-100">
-                {{-- <form action="{{ route('products') }}" method="GET" class="flex flex-col md:flex-row gap-4"> --}}
                 <form action="{{ url()->current() }}" method="GET" class="flex flex-col md:flex-row gap-4">
                     <input
                         type="text"
@@ -56,7 +55,7 @@
                         $formatPrice = fn($p) => 'Rp' . number_format($p, 0, ',', '.');
                     @endphp
 
-                    {{-- Product Card (Seluruh area card memicu modal) --}}
+                    {{-- Product Card --}}
                     <div
                         data-id="{{ $item->id }}"
                         data-name="{{ $item->name }}"
@@ -70,19 +69,17 @@
                             <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 4v16m8-8H4"></path></svg>
                         </div>
 
+                        {{-- Image Area - KEMBALI KE LOGIKA AWAL --}}
+                        <div class="p-4 bg-gray-100 flex justify-center items-center h-48">
                             @if($item->image_path)
-                                {{-- ✅ PAKAI FULL URL S3 BERIKUT --}}
-                                @if($item->image_path)
-                                    <img src="https://{{ env('AWS_BUCKET') }}.s3.{{ env('AWS_DEFAULT_REGION') }}.amazonaws.com/medicine-1.jpg"  
-                                    alt="{{ $item->name }}" 
-                                    class="max-h-full object-contain">
-                                @else
-                                    <div class="text-gray-400 text-xs">No Image</div>
-                                @endif
+                                {{-- Menggunakan asset() untuk kemudahan, pastikan DB sudah berisi URL lengkap S3 --}}
+                                <img src="{{ asset($item->image_path) }}" 
+                                     alt="{{ $item->name }}" 
+                                     class="max-h-full object-contain">
                             @else
                                 <div class="text-gray-400 text-xs">No Image</div>
                             @endif
-    
+                        </div>
 
                         {{-- Detail Text --}}
                         <div class="p-5 flex flex-col flex-grow">
@@ -115,26 +112,19 @@
         </div>
     </div>
 
-    {{-- =============================================== --}}
     {{-- MODAL ADD TO CART --}}
-    {{-- =============================================== --}}
     <div id="cart-modal" class="fixed inset-0 bg-gray-900 bg-opacity-75 z-50 flex items-center justify-center hidden p-4">
         <div class="bg-white rounded-xl shadow-2xl w-full max-w-lg p-6 md:p-8 transform transition-all">
-
             <h3 class="text-2xl font-bold text-gray-900 mb-4 border-b pb-2">Add Item to Cart</h3>
-
-            {{-- ACTION diarahkan ke route POST cart.add --}}
             <form id="add-to-cart-form" method="POST" action="{{ route('cart.add') }}">
                 @csrf
                 <input type="hidden" name="item_id" id="modal-item-id">
-
                 <div class="mb-5 space-y-2">
                     <p class="text-sm text-gray-500">Product Name:</p>
                     <h4 id="modal-item-name" class="text-xl font-extrabold text-[#1364FF]"></h4>
                     <p class="text-md text-gray-600">Category: <span id="modal-item-category" class="font-semibold text-pink-600"></span></p>
                     <p class="text-md text-gray-600">Price: <span id="modal-item-price" class="font-bold text-gray-900"></span></p>
                 </div>
-
                 <div class="mb-5">
                     <label for="quantity" class="block text-sm font-medium text-gray-700 mb-2">Quantity</label>
                     <div class="flex items-center space-x-3">
@@ -143,19 +133,13 @@
                         <button type="button" id="increment-qty" class="w-10 h-10 bg-gray-200 rounded-lg hover:bg-gray-300 font-bold text-xl transition">+</button>
                     </div>
                 </div>
-
                 <div class="mb-6">
                     <label for="notes" class="block text-sm font-medium text-gray-700 mb-2">Special Notes (Optional)</label>
                     <textarea name="notes" id="modal-notes" rows="3" class="w-full p-3 border border-gray-300 rounded-lg focus:border-[#1364FF] focus:ring-1 focus:ring-[#1364FF]" placeholder="e.g., Packaging instructions, special delivery time..."></textarea>
                 </div>
-
                 <div class="flex justify-end space-x-3">
-                    <button type="button" id="cancel-cart-modal" class="py-2 px-4 border border-gray-300 rounded-lg text-gray-700 hover:bg-gray-100 transition">
-                        Cancel
-                    </button>
-                    <button type="submit" class="bg-pink-600 hover:bg-pink-700 text-white font-bold py-2 px-4 rounded-lg shadow-md transition">
-                        Add to Cart
-                    </button>
+                    <button type="button" id="cancel-cart-modal" class="py-2 px-4 border border-gray-300 rounded-lg text-gray-700 hover:bg-gray-100 transition">Cancel</button>
+                    <button type="submit" class="bg-pink-600 hover:bg-pink-700 text-white font-bold py-2 px-4 rounded-lg shadow-md transition">Add to Cart</button>
                 </div>
             </form>
         </div>
@@ -198,27 +182,15 @@
             };
 
             cancelButton.addEventListener('click', closeModal);
-            modal.addEventListener('click', (e) => {
-                if (e.target === modal) closeModal();
-            });
-
-            incrementBtn.addEventListener('click', (e) => {
-                e.stopPropagation();
-                qtyInput.value = parseInt(qtyInput.value) + 1;
-            });
-
+            modal.addEventListener('click', (e) => { if (e.target === modal) closeModal(); });
+            incrementBtn.addEventListener('click', (e) => { e.stopPropagation(); qtyInput.value = parseInt(qtyInput.value) + 1; });
             decrementBtn.addEventListener('click', (e) => {
                 e.stopPropagation();
                 let currentVal = parseInt(qtyInput.value);
-                if (currentVal > 1) {
-                    qtyInput.value = currentVal - 1;
-                }
+                if (currentVal > 1) { qtyInput.value = currentVal - 1; }
             });
-
             qtyInput.addEventListener('change', () => {
-                if (parseInt(qtyInput.value) < 1 || isNaN(parseInt(qtyInput.value))) {
-                    qtyInput.value = 1;
-                }
+                if (parseInt(qtyInput.value) < 1 || isNaN(parseInt(qtyInput.value))) { qtyInput.value = 1; }
             });
         });
     </script>
