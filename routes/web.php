@@ -88,9 +88,9 @@ Route::middleware('auth')->group(function () {
     Route::get('/profile/order/{id}', [UserController::class, 'showOrderDetail'])->name('profile.order.detail');
     Route::put('/profile/update', [AuthController::class, 'updateProfile'])->name('profile.update');
 
-    // =========================================================================
-    // == KELOMPOK 3: ROUTES ADMIN
-    // =========================================================================
+  
+    // KELOMPOK 3: ROUTES ADMIN
+
     Route::prefix('admin')->group(function () {
 
         Route::get('/dashboard', [DashboardController::class, 'index'])->name('admin.dashboard');

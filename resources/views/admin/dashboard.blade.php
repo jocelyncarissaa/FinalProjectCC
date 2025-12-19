@@ -627,7 +627,7 @@
             <a href="{{ route('admin.orders.index') }}" class="menu-item {{ request()->routeIs('admin.orders.*') ? 'active' : '' }}">
                 <span>Orders</span>
                 @php
-                    // Hitung order pending langsung di view 
+                    // Hitung order pending langsung di view
                     $pendingCount = \App\Models\Order::where('status', 'pending')->count();
                 @endphp
 
@@ -642,10 +642,11 @@
             </a>
 
 
-            <a href="{{ route('admin.items.index')}}"
+            <a href="{{ route('admin.shipments.index') }}"
                 class="menu-item {{ request()->routeIs('admin.shipments.*') ? 'active' : '' }}">
                 <span>Shipment</span>
             </a>
+
 
 
         </nav>
@@ -734,7 +735,7 @@
             <div class="stat-card card-yellow">
                 <div class="stat-header">
                     <span>Revenue</span>
-                    <span>{{ \Carbon\Carbon::now()->format('M Y') }} ▾</span> 
+                    <span>{{ \Carbon\Carbon::now()->format('M Y') }} ▾</span>
                 </div>
                 <div class="stat-value">Rp {{ number_format($revenue, 0, ',', '.') }}</div>
                 <div class="stat-footer">
