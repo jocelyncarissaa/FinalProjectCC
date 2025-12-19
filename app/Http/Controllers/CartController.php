@@ -6,19 +6,34 @@ use Illuminate\Http\Request;
 use App\Models\Cart;
 use App\Models\Item;
 use Illuminate\Support\Facades\Auth;
+use App\Services\CartPriceService; // Panggil Service
 
 class CartController extends Controller
 {
+    protected $priceService;
+
+    // Inject Service melalui Constructor agar bisa digunakan di semua method
+    public function __construct(CartPriceService $priceService)
+    {
+        $this->priceService = $priceService;
+    }
+
     /**
      * Menampilkan halaman keranjang belanja.
      */
     public function index()
     {
         $cartItems = Cart::with('item')->where('user_id', Auth::id())->get();
-        $total = $cartItems->sum(function($cart) {
-            $price = $cart->item->discount_price ?? $cart->item->price;
-            return $price * $cart->quantity;
-        });
+
+        // REFACTOR: Gunakan Service untuk menghitung total
+        $formattedItems = $cartItems->map(function($cart) {
+            return [
+                'price' => $cart->item->discount_price ?? $cart->item->price,
+                'qty' => $cart->quantity
+            ];
+        })->toArray();
+
+        $total = $this->priceService->calculateSubtotal($formattedItems);
 
         return view('user.cart.cart_summary', compact('cartItems', 'total'));
     }
@@ -34,41 +49,41 @@ class CartController extends Controller
             'quantity' => 'required|integer',
         ]);
 
+        $item = Item::with('inventory')->findOrFail($request->item_id);
         $existingCart = Cart::where('user_id', Auth::id())
                             ->where('item_id', $request->item_id)
                             ->first();
 
         if ($existingCart) {
-            // Hitung kuantitas baru
             $newQuantity = $existingCart->quantity + $request->quantity;
 
-            // Jika kuantitas 0 atau kurang, hapus item
             if ($newQuantity <= 0) {
                 $existingCart->delete();
-                
-                if ($request->ajax()) {
-                    return response()->json(['status' => 'removed']);
-                }
+                if ($request->ajax()) return response()->json(['status' => 'removed']);
                 return redirect()->route('cart')->with('success', 'Item removed from cart.');
             }
 
-            // Update kuantitas
+            // --- VALIDASI SERVICE (Unit Test Relevan) ---
+            // Gunakan isStockSufficient dari service
+            if (!$this->priceService->isStockSufficient($newQuantity, $item->inventory->stock)) {
+                if ($request->ajax()) return response()->json(['status' => 'error', 'message' => 'Stock insufficient'], 400);
+                return redirect()->back()->with('error', 'Stok tidak mencukupi.');
+            }
+
             $existingCart->update(['quantity' => $newQuantity]);
-            
-            // Update catatan jika ada kiriman notes baru
             if($request->notes) {
                 $existingCart->update(['notes' => $request->notes]);
             }
 
-            // Respons untuk AJAX (Plus-Minus di Cart)
             if ($request->ajax()) {
-                return response()->json([
-                    'status' => 'updated',
-                    'new_qty' => $newQuantity
-                ]);
+                return response()->json(['status' => 'updated', 'new_qty' => $newQuantity]);
             }
         } else {
-            // Jika item belum ada (Tambah dari katalog)
+            // --- VALIDASI SERVICE UNTUK ITEM BARU ---
+            if (!$this->priceService->isStockSufficient($request->quantity, $item->inventory->stock)) {
+                return redirect()->back()->with('error', 'Stok tidak mencukupi.');
+            }
+
             Cart::create([
                 'user_id' => Auth::id(),
                 'item_id' => $request->item_id,
@@ -76,12 +91,9 @@ class CartController extends Controller
                 'notes' => $request->notes,
             ]);
 
-            if ($request->ajax()) {
-                return response()->json(['status' => 'added']);
-            }
+            if ($request->ajax()) return response()->json(['status' => 'added']);
         }
 
-        // Respons default untuk form submit biasa (Halaman Katalog)
         return redirect()->route('cart')->with('success', 'Product added to cart!');
     }
 
