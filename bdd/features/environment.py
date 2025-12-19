@@ -126,10 +126,8 @@ def _save_last_response(context, resp: requests.Response):
 
 # Optional helper yang bisa kamu pakai di steps:
 def ensure_csrf(context, login_page="/login"):
-    """
-    Pastikan context.csrf_token terisi dengan cara GET halaman login/register dulu.
-    Ini menghindari 419 Page Expired saat POST.
-    """
+    # memastikan context.csrf_token terisi dengan cara GET halaman login/register dulu.
+    # Ini menghindari 419 Page Expired saat POST.
     if context.csrf_token:
         return context.csrf_token
     resp = context.http_get(login_page)
