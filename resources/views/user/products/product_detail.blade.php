@@ -74,7 +74,7 @@
                             @if($item->image_path)
                                 {{-- ✅ PAKAI FULL URL S3 BERIKUT --}}
                                 @if($item->image_path)
-                                    <img src="{{ $item->image_path }}"  
+                                    <img src="https://{{ env('AWS_BUCKET') }}.s3.{{ env('AWS_DEFAULT_REGION') }}.amazonaws.com/{{ $item->image_path }}"  
                                     alt="{{ $item->name }}" 
                                     class="max-h-full object-contain">
                                 @else
