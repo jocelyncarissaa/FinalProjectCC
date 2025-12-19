@@ -62,7 +62,7 @@ class AuthController extends Controller
                 'string', 
                 'min:6', 
                 'confirmed', 
-                new PasswordStrength() // Memanggil Rule Asli
+                new PasswordStrength() 
             ],
         ],
         [

@@ -1,46 +1,66 @@
 <?php
 
-// app/Http/Controllers/CheckoutController.php
 namespace App\Http\Controllers;
+
 use Illuminate\Http\Request;
-use App\Models\Item;
 use App\Models\Inventory;
 use App\Models\Order;
 use App\Models\OrderDetail;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Auth;
+use App\Services\CartPriceService; // Import Service Harga & Stok
+use App\Services\CheckoutService;  // Import Service Kelayakan Checkout
 
 class CheckoutController extends Controller
 {
-    // Menyimpan order baru ke database.
-     
+    protected $priceService;
+    protected $checkoutService;
+
+
+    public function __construct(CartPriceService $priceService, CheckoutService $checkoutService)
+    {
+        $this->priceService = $priceService;
+        $this->checkoutService = $checkoutService;
+    }
+
     public function store(Request $request)
     {
         $cart = session()->get('cart', []);
-        if (empty($cart)) {
-            return redirect()->route('home')->with('error', 'Keranjang Anda kosong!');
+        $address = $request->input('address');
+
+        // 1. Validasi Kelayakan (Menggunakan CheckoutService)
+        // Mengecek apakah keranjang kosong atau alamat belum diisi
+        if (!$this->checkoutService->isEligible($cart, $address)) {
+            return redirect()->route('cart.index')->with('error', 'Lengkapi keranjang dan alamat pengiriman Anda!');
         }
 
         try {
             DB::beginTransaction();
 
-            // 1. Validasi Stok 
             foreach ($cart as $id => $details) {
                 $inventory = Inventory::where('item_id', $id)->first();
-                if (!$inventory || $inventory->stock < $details['quantity']) {
+               
+                if (!$inventory || !$this->priceService->isStockSufficient($details['quantity'], $inventory->stock)) {
                     throw new \Exception('Stok untuk ' . $details['name'] . ' tidak mencukupi.');
                 }
             }
 
-            // 2. Buat Order 
+            $formattedItems = collect($cart)->map(fn($item) => [
+                'price' => $item['price'],
+                'qty' => $item['quantity']
+            ])->toArray();
+            
+            $totalPrice = $this->priceService->calculateSubtotal($formattedItems);
+
+            // 4. Buat Order
             $order = Order::create([
-                'user_id' => Auth::id(), 
-                'total_price' => $this->calculateTotalPrice($cart), 
-                'status' => 'pending', 
-                'shipping_address' => $request->input('address') 
+                'user_id' => Auth::id(),
+                'total_price' => $totalPrice,
+                'status' => 'pending',
+                'shipping_address' => $address
             ]);
 
-            // 3. Buat Order Details & Kurangi Stok
+            // 5. Simpan Detail & Kurangi Stok
             foreach ($cart as $id => $details) {
                 OrderDetail::create([
                     'order_id' => $order->id,
@@ -49,31 +69,18 @@ class CheckoutController extends Controller
                     'price_per_unit' => $details['price']
                 ]);
 
-                $inventory = Inventory::where('item_id', $id)->first();
-                $inventory->decrement('stock', $details['quantity']);
+                // Update stok di DB
+                Inventory::where('item_id', $id)->decrement('stock', $details['quantity']);
             }
-
-            // 4. Panggil Event Email 
-            // blablabla
 
             DB::commit();
             session()->forget('cart');
 
-            // Redirect ke success page
             return redirect()->route('order.history')->with('success', 'Pesanan berhasil dibuat!');
 
         } catch (\Exception $e) {
             DB::rollBack();
             return redirect()->route('cart.index')->with('error', $e->getMessage());
         }
-    }
-
-    private function calculateTotalPrice($cart)
-    {
-        $total = 0;
-        foreach ($cart as $id => $details) {
-            $total += $details['price'] * $details['quantity'];
-        }
-        return $total;
     }
 }
