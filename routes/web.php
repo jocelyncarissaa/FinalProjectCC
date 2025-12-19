@@ -61,10 +61,10 @@ Route::middleware('auth')->group(function () {
     // 4. PRODUCTS & DETAIL
     Route::get('/products', [ItemController::class, 'index'])->name('products');
 
-    Route::get('/product-detail/{id}', function ($id) {
-        // TODO: Ganti ini dengan ItemController@show untuk menampilkan detail
-        return view('user.products.product_detail');
-    })->name('product.detail');
+    // Route::get('/product-detail/{id}', function ($id) {
+    //     // TODO: Ganti ini dengan ItemController@show untuk menampilkan detail
+    //     return view('user.products.product_detail');
+    // })->name('product.detail');
 
     // 5. FITUR CART (KERANJANG)
     // Menampilkan halaman ringkasan keranjang

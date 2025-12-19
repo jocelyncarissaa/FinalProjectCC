@@ -74,7 +74,7 @@
                         <div class="p-4 bg-gray-100 flex justify-center items-center h-48">
                             @if($item->image_path)
                                 <img 
-                                    src="https://pharmaplus-img-2025.s3.us-east-1.amazonaws.com/{{ $item->image_path }}" 
+                                    src="{{ $item->image_path }}" 
                                     alt="{{ $item->name }}" 
                                     class="max-h-full object-contain"
                                 >
