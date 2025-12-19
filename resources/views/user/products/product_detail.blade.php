@@ -75,7 +75,7 @@
                             @if($item->image_path)
                                 {{-- Laravel akan otomatis membuatkan URL lengkap ke S3 --}}
                                 <img 
-                                    src="https://pharmaplus-img-2025.s3.us-east-1.amazonaws.com/{{ $item->image_path }}" 
+                                    src="http://pharma-alb-699345372.us-east-1.elb.amazonaws.com/medicine-1.jpg" 
                                     alt="{{ $item->name }}" 
                                     class="max-h-full object-contain"
                                 >
