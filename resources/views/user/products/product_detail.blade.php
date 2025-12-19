@@ -73,7 +73,7 @@
                        blade
                             @if($item->image_path)
                                 <img 
-                                    src="{{ env('S3_BUCKET_URL') }}/{{ $item->image_path }}" 
+                                    src="{{ env('AWS_BUCKET') }}/{{ $item->image_path }}" 
                                     alt="{{ $item->name }}" 
                                     class="max-h-full object-contain"
                                 >
