@@ -2,56 +2,109 @@
 
 namespace App\Http\Controllers;
 
-use Illuminate\Http\Request;
 use App\Models\Cart;
 use App\Models\Order;
 use App\Models\OrderDetail;
 use App\Models\Inventory;
-use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\DB;
+use App\Services\CartPriceService;     
+use App\Services\CheckoutService;       
+use App\Services\OrderStatusService;    
 
 class OrderProcessController extends Controller
 {
+    protected $priceService;
+    protected $checkoutService;
+    protected $statusService;
+
+    /**
+     * Dependency Injection melalui Constructor agar semua Service
+     * bisa digunakan di dalam Controller ini.
+     */
+    public function __construct(
+        CartPriceService $priceService, 
+        CheckoutService $checkoutService,
+        OrderStatusService $statusService
+    ) {
+        $this->priceService = $priceService;
+        $this->checkoutService = $checkoutService;
+        $this->statusService = $statusService;
+    }
+
+    /**
+     * Memproses pesanan dari keranjang ke database.
+     */
     public function store()
     {
         $user = Auth::user();
-        $cartItems = Cart::with('item')->where('user_id', $user->id)->get();
+        // Load keranjang beserta data item dan inventory-nya
+        $cartItems = Cart::with('item.inventory')->where('user_id', $user->id)->get();
 
-        if ($cartItems->isEmpty()) {
-            return redirect()->route('cart')->with('error', 'Keranjang kosong.');
+        // 1. Validasi Kelayakan (Menggunakan CheckoutService)
+        // Mengecek apakah keranjang kosong atau alamat belum diatur
+        if (!$this->checkoutService->isEligible($cartItems->toArray(), $user->address)) {
+            return redirect()->route('cart')->with('error', 'Lengkapi keranjang dan alamat Anda di profil sebelum checkout.');
         }
 
         return DB::transaction(function () use ($cartItems, $user) {
-            // 1. Buat Header Order
+            
+            // 2. Siapkan data item untuk dihitung oleh Service
+            $formattedItems = $cartItems->map(fn($c) => [
+                'price' => $c->item->discount_price ?? $c->item->price,
+                'qty' => $c->quantity
+            ])->toArray();
+            
+            // Hitung total menggunakan CartPriceService (Logic yang di-Unit Test)
+            $totalAmount = $this->priceService->calculateSubtotal($formattedItems);
+
+            // 3. Buat Header Order 
+            // Menggunakan 'total_amount' sesuai struktur kolom database Anda
             $order = Order::create([
-                'user_id' => $user->id,
-                'total_amount' => $cartItems->sum(fn($c) => ($c->item->discount_price ?? $c->item->price) * $c->quantity),
-                'status' => 'pending', 
-                'shipping_address' => $user->address ?? 'Alamat Belum Diatur',
+                'user_id'      => $user->id,
+                'total_amount' => $totalAmount,
+                'status'       => 'pending', // Status awal yang divalidasi OrderStatusService
+                'shipping_address' => $user->address,
             ]);
 
-            // 2. Simpan item & potong stok
+            // 4. Simpan Detail Item & Potong Stok
             foreach ($cartItems as $cart) {
+                
+                /**
+                 * VALIDASI STOK (Guard Clause)
+                 * Memanggil isStockSufficient dari CartPriceService.
+                 * Jika ingin mendemonstrasikan BUG STOK MINUS untuk laporan, 
+                 * Anda bisa memberikan komentar (disable) pada blok IF di bawah ini.
+                 */
+                if (!$this->priceService->isStockSufficient($cart->quantity, $cart->item->inventory->stock)) {
+                    throw new \Exception("Stok untuk produk {$cart->item->name} tidak mencukupi.");
+                }
+
+                // Simpan detail pesanan
                 OrderDetail::create([
-                    'order_id' => $order->id,
-                    'item_id' => $cart->item_id,
-                    'quantity' => $cart->quantity,
+                    'order_id'       => $order->id,
+                    'item_id'        => $cart->item_id,
+                    'quantity'       => $cart->quantity,
                     'price_per_unit' => $cart->item->discount_price ?? $cart->item->price
                 ]);
                 
+                // Kurangi stok di tabel inventory
                 Inventory::where('item_id', $cart->item_id)->decrement('stock', $cart->quantity);
             }
 
-            // 3. Hapus keranjang
+            // 5. Hapus data keranjang setelah pesanan berhasil dibuat
             Cart::where('user_id', $user->id)->delete();
 
+            // Redirect ke halaman sukses
             return redirect()->route('orders.success', $order->id);
         });
     }
 
+    /**
+     * Menampilkan halaman sukses setelah pembayaran/checkout.
+     */
     public function success($id)
     {
-        // Menggunakan relasi 'items' (agar konsisten dengan UserController)
         $order = Order::with(['items.item', 'user'])
             ->where('id', $id)
             ->where('user_id', Auth::id())
