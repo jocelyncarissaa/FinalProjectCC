@@ -72,11 +72,16 @@
 
                        blade
                             @if($item->image_path)
-                                <img 
-                                    src="{{ env('AWS_BUCKET') }}/{{ $item->image_path }}" 
-                                    alt="{{ $item->name }}" 
-                                    class="max-h-full object-contain"
-                                >
+                                {{-- ✅ PAKAI FULL URL S3 BERIKUT --}}
+                                @if($item->image_path)
+                                    <img 
+                                        src="https://pharmaplus-img-2025.s3.us-east-1.amazonaws.com/{{ $item->image_path }}" 
+                                        alt="{{ $item->name }}" 
+                                        class="max-h-full object-contain"
+                                    >
+                                @else
+                                    <div class="text-gray-400 text-xs">No Image</div>
+                                @endif
                             @else
                                 <div class="text-gray-400 text-xs">No Image</div>
                             @endif
