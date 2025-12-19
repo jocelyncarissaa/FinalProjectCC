@@ -73,7 +73,10 @@
                         {{-- Image Area --}}
                         <div class="p-4 bg-gray-100 flex justify-center items-center h-48">
                             @if($item->image_path)
-                                <img src="{{ asset($item->image_path) }}" alt="{{ $item->name }}" class="max-h-full object-contain">
+                                {{-- Laravel akan otomatis membuatkan URL lengkap ke S3 --}}
+                                <img src="{{ Storage::disk('s3')->url($item->image_path) }}" 
+                                    alt="{{ $item->name }}" 
+                                    class="max-h-full object-contain">
                             @else
                                 <div class="text-gray-400 text-xs">No Image</div>
                             @endif
