@@ -73,9 +73,8 @@
                         {{-- Image Area --}}
                         <div class="p-4 bg-gray-100 flex justify-center items-center h-48">
                             @if($item->image_path)
-                                {{-- Laravel akan otomatis membuatkan URL lengkap ke S3 --}}
                                 <img 
-                                    src="http://pharma-alb-699345372.us-east-1.elb.amazonaws.com/medicine-1.jpg" 
+                                    src="https://pharmaplus-img-2025.s3.us-east-1.amazonaws.com/{{ $item->image_path }}" 
                                     alt="{{ $item->name }}" 
                                     class="max-h-full object-contain"
                                 >
