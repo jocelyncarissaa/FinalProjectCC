@@ -1,38 +1,30 @@
 <?php
 
-namespace Tests\Unit;
+namespace Tests\Unit\Auth;
 
-use PHPUnit\Framework\TestCase; // Gunakan base TestCase untuk Unit Test murni
+use Tests\TestCase;
 use App\Models\User;
+use App\Services\AuthRedirectService;
 
 class AuthRedirectTest extends TestCase
 {
-    /**
-     * Mengetes logika penentuan path redirect berdasarkan role.
-     */
-    public function test_it_returns_admin_dashboard_path_for_admin_role(): void
+    public function test_it_returns_admin_dashboard_url_for_admin_role(): void
     {
-        // ARRANGE: Buat object user di memori (Tanpa Database)
-        $user = new User();
-        $user->role = 'admin';
+        $user = new User(['role' => 'admin']);
+        $service = new AuthRedirectService();
 
-        // ACT: Jalankan logika (simulasi logic di AuthController)
-        $path = ($user->role === 'admin') ? '/admin/dashboard' : '/home';
+        $path = $service->getRedirectPath($user);
 
-        // ASSERT: Pastikan hasilnya tepat
-        $this->assertEquals('/admin/dashboard', $path);
+        $this->assertEquals(route('admin.dashboard'), $path);
     }
 
-    public function test_it_returns_home_path_for_regular_user_role(): void
+    public function test_it_returns_home_url_for_regular_user_role(): void
     {
-        // ARRANGE
-        $user = new User();
-        $user->role = 'user';
+        $user = new User(['role' => 'user']);
+        $service = new AuthRedirectService();
 
-        // ACT
-        $path = ($user->role === 'admin') ? '/admin/dashboard' : '/home';
+        $path = $service->getRedirectPath($user);
 
-        // ASSERT
-        $this->assertEquals('/home', $path);
+        $this->assertEquals(route('home'), $path);
     }
 }
