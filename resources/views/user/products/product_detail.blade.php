@@ -74,7 +74,7 @@
                             @if($item->image_path)
                                 {{-- ✅ PAKAI FULL URL S3 BERIKUT --}}
                                 @if($item->image_path)
-                                    <img src="https://pharmaplus-img-2025.s3.us-east-1.amazonaws.com/{{ basename($item->image_path) }}" 
+                                    <img src="{{ $item->image_path }}"  
                                     alt="{{ $item->name }}" 
                                     class="max-h-full object-contain">
                                 @else

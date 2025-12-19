@@ -13,7 +13,7 @@ class OrderSeeder extends Seeder
     public function run(): void
     {
         $user = User::where('email', 'customer@gmail.com')->first();
-        $items = Item::all();
+        $items = Item::paginate(12);
 
         if(!$user || $items->isEmpty()) return;
 
