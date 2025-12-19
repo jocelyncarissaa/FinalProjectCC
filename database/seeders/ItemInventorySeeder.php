@@ -46,7 +46,7 @@ class ItemInventorySeeder extends Seeder
                 $randomStock = rand(50, 300);
                 // Buat gambar
                 $imageFile = 'medicine-' . (($count % 8) + 1) . '.jpg';
-                $imageUrl  = "{$baseS3Url}/{$imageFile}";
+                // $imageUrl  = "{$baseS3Url}/{$imageFile}";
 
 
                 $item = Item::create([//from csv
@@ -57,7 +57,7 @@ class ItemInventorySeeder extends Seeder
                     'strength' => $row[$columnMap['Strength']] ?? null,
                     'manufacturer' => $row[$columnMap['Manufacturer']] ?? null,
                     'indication' => $row[$columnMap['Indication']] ?? null,
-                    'image_path' => $imageUrl,
+                    'image_path' => $imageFile, // Simpan nama file saja
 
                 ]);
 

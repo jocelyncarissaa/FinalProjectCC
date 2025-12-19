@@ -31,7 +31,7 @@ class Order extends Model
         return $this->hasMany(OrderDetail::class, 'order_id');
     }
 
-    public function details()
+    public function orderDetails()
     {
         return $this->hasMany(OrderDetail::class, 'order_id');
     }
@@ -48,4 +48,7 @@ class Order extends Model
             default     => 'background: #F3F4F6; color: #374151;'
         };
     }
+
+    // eloquent
+
 }
